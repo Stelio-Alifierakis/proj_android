@@ -53,7 +53,8 @@
             android:orientation="vertical"
             android:gravity="center_vertical"
             android:background="@color/vert_caca_oie"
-            android:layout_margin="10sp">
+            android:layout_margin="10sp"
+            android:padding="10sp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -67,7 +68,7 @@
                 android:id="@+id/et_connection_ipAUtomate1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/light_grey"
+                android:background="@color/vert_gris"
                 android:hint="Ip de l'automate"/>
 
             <TextView
@@ -82,9 +83,8 @@
                 android:id="@+id/et_connection_rackAUtomate1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/light_grey"
-                android:hint="Rack de l'automate"
-                android:gravity="center_horizontal"/>
+                android:background="@color/vert_gris"
+                android:hint="Rack de l'automate" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -98,7 +98,7 @@
                 android:id="@+id/et_connection_slotAUtomate1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/light_grey"
+                android:background="@color/vert_gris"
                 android:hint="Slot de l'automate"/>
 
             <Button
@@ -133,18 +133,73 @@
                     android:onClick="onMainClickManager"
                     android:id="@+id/bt_connection_text_co2"
                     android:textSize="10sp"
-                    android:text="Se connecter" />
+                    android:text="Configurer connexion" />
 
             </LinearLayout>
 
+
             <LinearLayout
-                android:id="@+id/ll_connection_coAutomate2"
+                android:id="@+id/ll_connection_ipAutomate2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal"
-                android:background="@color/creme"
-                android:layout_margin="10sp">
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:background="@color/vert_caca_oie"
+                android:layout_margin="10sp"
+                android:padding="10sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_connection_txt_ipAutomate2"
+                    android:textSize="15sp"
+                    android:text="L'ip de l'automate"
+                    android:layout_marginRight="10sp"/>
+
+                <EditText
+                    android:id="@+id/et_connection_ipAUtomate2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/vert_gris"
+                    android:hint="Ip de l'automate"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_connection_txt_rackAutomate2"
+                    android:textSize="15sp"
+                    android:text="Le rack de l'automate"
+                    android:layout_margin="10sp"/>
+
+                <EditText
+                    android:id="@+id/et_connection_rackAUtomate2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/vert_gris"
+                    android:hint="Rack de l'automate" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_connection_txt_slotAutomate2"
+                    android:textSize="15sp"
+                    android:text="Le slot de l'automate"
+                    android:layout_margin="10sp"/>
+
+                <EditText
+                    android:id="@+id/et_connection_slotAUtomate2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/vert_gris"
+                    android:hint="Slot de l'automate"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onMainClickManager"
+                    android:id="@+id/bt_connection_text_lancerAutomate2"
+                    android:textSize="10sp"
+                    android:text="Se connecter" />
 
             </LinearLayout>
 
