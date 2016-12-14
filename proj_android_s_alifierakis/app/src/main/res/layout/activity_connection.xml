@@ -39,7 +39,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="onMainClickManager"
+                    android:onClick="onConnexionClickManager"
                     android:id="@+id/bt_connection_text_co1"
                     android:textSize="10sp"
                     android:text="Configurer connexion" />
@@ -54,6 +54,7 @@
             android:gravity="center_vertical"
             android:background="@color/vert_caca_oie"
             android:layout_margin="10sp"
+            android:visibility="gone"
             android:padding="10sp">
 
             <TextView
@@ -104,7 +105,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onMainClickManager"
+                android:onClick="onConnexionClickManager"
                 android:id="@+id/bt_connection_text_lancerAutomate1"
                 android:textSize="10sp"
                 android:text="Se connecter" />
@@ -130,7 +131,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="onMainClickManager"
+                    android:onClick="onConnexionClickManager"
                     android:id="@+id/bt_connection_text_co2"
                     android:textSize="10sp"
                     android:text="Configurer connexion" />
@@ -139,13 +140,14 @@
 
 
             <LinearLayout
-                android:id="@+id/ll_connection_ipAutomate2"
+                android:id="@+id/ll_connection_coAutomate2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center_vertical"
                 android:background="@color/vert_caca_oie"
                 android:layout_margin="10sp"
+                android:visibility="gone"
                 android:padding="10sp">
 
                 <TextView
@@ -196,7 +198,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="onMainClickManager"
+                    android:onClick="onConnexionClickManager"
                     android:id="@+id/bt_connection_text_lancerAutomate2"
                     android:textSize="10sp"
                     android:text="Se connecter" />
