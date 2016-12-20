@@ -1,13 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_automate__comprime"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="be.heh.campus_technique.proj_android_s_alifierakis.Automate_Comprime">
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context="be.heh.campus_technique.proj_android_s_alifierakis.Automate_Comprime" >
 
-</RelativeLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="lire automate"
+        android:id="@+id/bt_autoCond_ro"
+        android:onClick="onAutoCondClickManager"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/creme"
+        android:padding="5sp"
+        android:layout_margin="15sp"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10sp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_AutoCompr_service"
+                android:src="@android:drawable/presence_online"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_AutoCompr_txt_service"
+                android:textSize="10sp"
+                android:text="Automate en service" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_AutoCompr_txt_nbreCompr"
+            android:textSize="20sp"
+            android:text="Nombre de comprimés" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rb_AutoCompr_5compr"
+                android:text="5 comprimés"
+                android:checked="true"
+                android:onClick="onAutoCondClickManager"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rb_AutoCompr_10compr"
+                android:text="10 comprimés"
+                android:onClick="onAutoCondClickManager"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rb_AutoCompr_15compr"
+                android:text="15 comprimés"
+                android:onClick="onAutoCondClickManager"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/vert_caca_oie"
+        android:padding="5sp"
+        android:layout_margin="15sp"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_AutoCompr_txt_nbCompr"
+                android:textSize="20sp"
+                android:text="Nombre de comprimés"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_AutoCompr_txt_nbreComprAffich"
+                android:textSize="20sp"
+                android:text="0"
+                android:padding="10sp"
+                android:background="@color/creme"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_AutoCompr_txt_nbBout"
+                android:textSize="20sp"
+                android:text="Nombre de bouteilles"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_AutoCompr_txt_nbBoutAffich"
+                android:textSize="20sp"
+                android:text="0"
+                android:padding="10sp"
+                android:background="@color/creme"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
