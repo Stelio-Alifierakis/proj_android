@@ -7,7 +7,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.io.Console;
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import be.heh.campus_technique.proj_android_s_alifierakis.Automate_Comprime;
 import simaticS7.S7;
 import simaticS7.S7Client;
 import simaticS7.S7OrderCode;
@@ -30,19 +34,23 @@ public class ReadS7Conditionnement {
     private S7Client comS7;
     private String[] param=new String[10];
     private byte[] datasPLC=new byte[512];
+    private ArrayList<Automate_Comprime> automates7=new ArrayList<>();
 
-    public ReadS7Conditionnement(View v){
+    public ReadS7Conditionnement(Automate_Comprime a,View v){
         vi_main_ui=v;
 
         comS7=new S7Client();
         plcS7=new AutomateS7();
 
+        automates7.add(a);
+
         readThread=new Thread(plcS7);
     }
 
     public void Stop(){
-        isRunning.set(false);
+        //isRunning.set(false);
         comS7.Disconnect();
+        isRunning.set(false);
         readThread.interrupt();
     }
 
@@ -62,8 +70,14 @@ public class ReadS7Conditionnement {
         //tv_main_plc.setText("PLC :" + String.valueOf(t));
     }
 
-    private void downlodOnProgressUpdate(int progress){
+    private void downlodOnProgressUpdate(Object progres){
         //pb_main_progressionS7.setProgress(progress);
+        int[] progress=(int[])progres;
+            Toast.makeText(vi_main_ui.getContext(), String.valueOf(progress[1]),Toast.LENGTH_LONG).show();
+        for(Automate_Comprime a : automates7){
+            a.lectureAutomate(progress);
+        }
+
     }
 
     private void downloadOnPostExecute(){
@@ -79,7 +93,7 @@ public class ReadS7Conditionnement {
                     downloadOnPreExecute(msg.arg1);
                     break;
                 case MESSAGE_PROGRESS_UPDATE:
-                    downlodOnProgressUpdate(msg.arg1);
+                    downlodOnProgressUpdate(msg.obj);
                     break;
                 case MESSAGE_POST_EXECUTE:
                     downloadOnPostExecute();
@@ -111,21 +125,32 @@ public class ReadS7Conditionnement {
                 while(isRunning.get()){
                     if(res.equals(0)){
                         //int retInfo=comS7.ReadArea(S7.S7AreaDB,5,9,2,datasPLC);
-                        int bts = (byte)comS7.ReadArea(S7.S7AreaDB,5,0,2,datasPLC);
+                        int bts = comS7.ReadArea(S7.S7AreaDB,5,0,36,datasPLC);
                         int dataBts=0;
-                        int dataB=0;
+                        int dataBts1=0;
+                        int dataBts2=0;
+                        int dataBts3=0;
+                        boolean dataB=false;
                         if(bts==0){
                             dataBts=S7.GetWordAt(datasPLC,0);
-                            sendProgressMessage(dataBts);
+                            /*dataB=S7.GetBitAt(datasPLC,1,3);
+                            dataBts= dataB ? 1 : 0;*/
+                            dataBts1=S7.GetWordAt(datasPLC,2);
+                            dataBts2=S7.GetWordAt(datasPLC,14);
+                            dataBts3=S7.GetWordAt(datasPLC,16);
+                            int[] dataBtss={dataBts,dataBts1,dataBts2,dataBts3};
+                            sendProgressMessage(dataBtss);
+
                         }
 
-                        Log.i("Variable API -> ", String.valueOf(dataBts));
+                        Log.i("Variable API -> ", String.valueOf(dataBts3));
                     }
 
                     try{
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
                     }
                     catch(Exception e){
+
                         e.printStackTrace();
                     }
 
@@ -144,10 +169,11 @@ public class ReadS7Conditionnement {
             monHandler.sendMessage(preExecuteMsg);
         }
 
-        private void sendProgressMessage(int i) {
+        private void sendProgressMessage(int[] i) {
             Message progressMsg=new Message();
             progressMsg.what=MESSAGE_PROGRESS_UPDATE;
-            progressMsg.arg1=i;
+            //progressMsg.arg1=i;
+            progressMsg.obj=i;
             monHandler.sendMessage(progressMsg);
         }
 
