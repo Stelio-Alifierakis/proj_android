@@ -8,8 +8,6 @@
     android:gravity="center_horizontal"
     tools:context="be.heh.campus_technique.proj_android_s_alifierakis.Connection" >
 
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

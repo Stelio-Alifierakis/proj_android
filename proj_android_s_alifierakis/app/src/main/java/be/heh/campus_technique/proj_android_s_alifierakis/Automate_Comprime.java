@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import be.heh.campus_technique.proj_android_s_alifierakis.ecritureAutomate.WriteS7Conditionnement;
@@ -16,7 +18,13 @@ import be.heh.campus_technique.proj_android_s_alifierakis.lectureAutomate.ReadS7
 
 public class Automate_Comprime extends Activity {
 
+    ImageView img_AutoCompr_arriveeFlacon;
+    Button bt_autoCond_arriveeFlacon;
     Button bt_autoCond_ro;
+    Button bt_autoCond_selecteur;
+    RadioButton rb_AutoCompr_5compr;
+    RadioButton rb_AutoCompr_10compr;
+    RadioButton rb_AutoCompr_15compr;
 
     private NetworkInfo network;
     private ConnectivityManager connexStatus;
@@ -29,7 +37,13 @@ public class Automate_Comprime extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_automate__comprime);
 
+        img_AutoCompr_arriveeFlacon = (ImageView) findViewById(R.id.img_AutoCompr_arriveeFlacon);
         bt_autoCond_ro = (Button) findViewById(R.id.bt_autoCond_ro);
+        bt_autoCond_arriveeFlacon = (Button) findViewById(R.id.bt_autoCond_arriveeFlacon);
+        bt_autoCond_selecteur = (Button) findViewById(R.id.bt_autoCond_selecteur);
+        rb_AutoCompr_5compr = (RadioButton) findViewById(R.id.rb_AutoCompr_5compr);
+        rb_AutoCompr_10compr = (RadioButton) findViewById(R.id.rb_AutoCompr_10compr);
+        rb_AutoCompr_15compr = (RadioButton) findViewById(R.id.rb_AutoCompr_15compr);
 
         connexStatus=(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
         network = connexStatus.getActiveNetworkInfo();
@@ -42,9 +56,9 @@ public class Automate_Comprime extends Activity {
                     if(bt_autoCond_ro.getText().equals("Lire automate")){
                         Toast.makeText(this,network.getTypeName(),Toast.LENGTH_LONG).show();
                         bt_autoCond_ro.setText("Se déconnecter");
-                        readS7=new ReadS7Conditionnement(v);
-                        readS7.Start("192.168.10.220","0","2");
-                        //readS7.Start("10.1.0.118","0","2");
+                        readS7=new ReadS7Conditionnement(this,v);
+                        //readS7.Start("192.168.10.220","0","2");
+                        readS7.Start("192.168.0.220","0","2");
 
                         try{
                             Thread.sleep(1000);
@@ -53,13 +67,13 @@ public class Automate_Comprime extends Activity {
                             e.printStackTrace();
                         }
 
-                        writeS7=new WriteS7Conditionnement();
-                        writeS7.Start("192.168.10.220","0","2");
-
+                        //writeS7=new WriteS7Conditionnement();
+                        //writeS7.Start("192.168.10.220","0","2");
+                        //writeS7.Start("192.168.0.220","0","2");
                     }
                     else{
                         readS7.Stop();
-                        writeS7.Stop();
+                        //writeS7.Stop();
                         try{
 
                             Thread.sleep(1000);
@@ -86,5 +100,17 @@ public class Automate_Comprime extends Activity {
         int d2=donnees[1];
         int d3=donnees[2];
         int d4=donnees[3];
+
+
+        Log.i("Automate_Comprime ","1 :" +String.valueOf(d1) + " valeur binaire :" +String.valueOf(0x0100 & d1));
+
+        bt_autoCond_selecteur.setText((0x0100 & d1) ==256 ? "Désactiver sélecteur" : "Activer sélecteur");
+        bt_autoCond_arriveeFlacon.setText((0x0008 & d1) ==8 ? "Désactiver arrivée des flacons" : "Activer arrivée des flacons");
+
+        String uri = ((0x0008 & d1) ==8 ? "@android:drawable/presence_online" : "@android:drawable/presence_offline");
+        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+        //img_AutoCompr_arriveeFlacon.setImageDrawable(getResources().getDrawable(imageResource,this.getTheme()));
+        img_AutoCompr_arriveeFlacon.setImageDrawable(getResources().getDrawable(imageResource));
+        //img_AutoCompr_arriveeFlacon.setImageResource(R.drawable);
     }
 }

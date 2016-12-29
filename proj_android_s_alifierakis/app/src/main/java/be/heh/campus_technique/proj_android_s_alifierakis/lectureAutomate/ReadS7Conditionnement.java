@@ -73,7 +73,7 @@ public class ReadS7Conditionnement {
     private void downlodOnProgressUpdate(Object progres){
         //pb_main_progressionS7.setProgress(progress);
         int[] progress=(int[])progres;
-            Toast.makeText(vi_main_ui.getContext(), String.valueOf(progress[1]),Toast.LENGTH_LONG).show();
+            //Toast.makeText(vi_main_ui.getContext(), "********" + String.valueOf(progress[0]),Toast.LENGTH_LONG).show();
         for(Automate_Comprime a : automates7){
             a.lectureAutomate(progress);
         }
@@ -143,7 +143,7 @@ public class ReadS7Conditionnement {
 
                         }
 
-                        Log.i("Variable API -> ", String.valueOf(dataBts3));
+                        //Log.i("Variable API -> ", String.valueOf(dataBts3));
                     }
 
                     try{
