@@ -19,6 +19,7 @@ import be.heh.campus_technique.proj_android_s_alifierakis.lectureAutomate.ReadS7
 public class Automate_Comprime extends Activity {
 
     ImageView img_AutoCompr_arriveeFlacon;
+    ImageView img_AutoCompr_moteur;
     Button bt_autoCond_arriveeFlacon;
     Button bt_autoCond_ro;
     Button bt_autoCond_selecteur;
@@ -38,6 +39,7 @@ public class Automate_Comprime extends Activity {
         setContentView(R.layout.activity_automate__comprime);
 
         img_AutoCompr_arriveeFlacon = (ImageView) findViewById(R.id.img_AutoCompr_arriveeFlacon);
+        img_AutoCompr_moteur = (ImageView) findViewById(R.id.img_AutoCompr_moteur);
         bt_autoCond_ro = (Button) findViewById(R.id.bt_autoCond_ro);
         bt_autoCond_arriveeFlacon = (Button) findViewById(R.id.bt_autoCond_arriveeFlacon);
         bt_autoCond_selecteur = (Button) findViewById(R.id.bt_autoCond_selecteur);
@@ -102,15 +104,21 @@ public class Automate_Comprime extends Activity {
         int d4=donnees[3];
 
 
-        Log.i("Automate_Comprime ","1 :" +String.valueOf(d1) + " valeur binaire :" +String.valueOf(0x0100 & d1));
+        Log.i("Automate_Comprime ","1 :" +String.valueOf(d2) + " valeur binaire :" +String.valueOf(0x0200 & d2));
 
         bt_autoCond_selecteur.setText((0x0100 & d1) ==256 ? "Désactiver sélecteur" : "Activer sélecteur");
         bt_autoCond_arriveeFlacon.setText((0x0008 & d1) ==8 ? "Désactiver arrivée des flacons" : "Activer arrivée des flacons");
 
         String uri = ((0x0008 & d1) ==8 ? "@android:drawable/presence_online" : "@android:drawable/presence_offline");
         int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-        //img_AutoCompr_arriveeFlacon.setImageDrawable(getResources().getDrawable(imageResource,this.getTheme()));
-        img_AutoCompr_arriveeFlacon.setImageDrawable(getResources().getDrawable(imageResource));
-        //img_AutoCompr_arriveeFlacon.setImageResource(R.drawable);
+        img_AutoCompr_arriveeFlacon.setImageDrawable(getResources().getDrawable(imageResource,this.getTheme()));
+
+        rb_AutoCompr_5compr.setChecked( (0x0800 & d2)== 2048? true : false);
+        rb_AutoCompr_10compr.setChecked( (0x1000 & d2)== 4096? true : false);
+        rb_AutoCompr_15compr.setChecked( (0x2000 & d2)== 8192? true : false);
+
+        uri = ((0x0200 & d2) ==512 ? "@android:drawable/presence_online" : "@android:drawable/presence_offline");
+        imageResource = getResources().getIdentifier(uri, null, getPackageName());
+        img_AutoCompr_moteur.setImageDrawable(getResources().getDrawable(imageResource,this.getTheme()));
     }
 }

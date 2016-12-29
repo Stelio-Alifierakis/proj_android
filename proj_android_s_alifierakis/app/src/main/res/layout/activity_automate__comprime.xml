@@ -65,19 +65,6 @@
                 android:textSize="10sp"
                 android:text="Moteur en marche" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/img_AutoCompr_problMoteur"
-                android:src="@android:drawable/presence_busy" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_AutoCompr_txt_problMoteur"
-                android:textSize="10sp"
-                android:text="Problème moteur" />
-
             </LinearLayout>
 
         <Button

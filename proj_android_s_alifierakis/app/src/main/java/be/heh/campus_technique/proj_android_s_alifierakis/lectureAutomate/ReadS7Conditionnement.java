@@ -135,7 +135,7 @@ public class ReadS7Conditionnement {
                             dataBts=S7.GetWordAt(datasPLC,0);
                             /*dataB=S7.GetBitAt(datasPLC,1,3);
                             dataBts= dataB ? 1 : 0;*/
-                            dataBts1=S7.GetWordAt(datasPLC,2);
+                            dataBts1=S7.GetWordAt(datasPLC,4);
                             dataBts2=S7.GetWordAt(datasPLC,14);
                             dataBts3=S7.GetWordAt(datasPLC,16);
                             int[] dataBtss={dataBts,dataBts1,dataBts2,dataBts3};
