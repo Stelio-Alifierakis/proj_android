@@ -35,14 +35,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/img_AutoCompr_service"
-                android:src="@android:drawable/presence_online" />
+                android:src="@android:drawable/presence_offline" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_AutoCompr_txt_service"
                 android:textSize="10sp"
-                android:text="Automate en service" />
+                android:text="Automate pas encore connecté" />
 
         </LinearLayout>
 

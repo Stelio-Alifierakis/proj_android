@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import be.heh.campus_technique.proj_android_s_alifierakis.ecritureAutomate.WriteS7Conditionnement;
@@ -20,12 +21,16 @@ public class Automate_Comprime extends Activity {
 
     ImageView img_AutoCompr_arriveeFlacon;
     ImageView img_AutoCompr_moteur;
+    ImageView img_AutoCompr_service;
     Button bt_autoCond_arriveeFlacon;
     Button bt_autoCond_ro;
     Button bt_autoCond_selecteur;
     RadioButton rb_AutoCompr_5compr;
     RadioButton rb_AutoCompr_10compr;
     RadioButton rb_AutoCompr_15compr;
+    TextView tv_AutoCompr_txt_nbBoutAffich;
+    TextView tv_AutoCompr_txt_nbreComprAffich;
+    TextView tv_AutoCompr_txt_service;
 
     private NetworkInfo network;
     private ConnectivityManager connexStatus;
@@ -40,12 +45,16 @@ public class Automate_Comprime extends Activity {
 
         img_AutoCompr_arriveeFlacon = (ImageView) findViewById(R.id.img_AutoCompr_arriveeFlacon);
         img_AutoCompr_moteur = (ImageView) findViewById(R.id.img_AutoCompr_moteur);
+        img_AutoCompr_service = (ImageView) findViewById(R.id.img_AutoCompr_service);
         bt_autoCond_ro = (Button) findViewById(R.id.bt_autoCond_ro);
         bt_autoCond_arriveeFlacon = (Button) findViewById(R.id.bt_autoCond_arriveeFlacon);
         bt_autoCond_selecteur = (Button) findViewById(R.id.bt_autoCond_selecteur);
         rb_AutoCompr_5compr = (RadioButton) findViewById(R.id.rb_AutoCompr_5compr);
         rb_AutoCompr_10compr = (RadioButton) findViewById(R.id.rb_AutoCompr_10compr);
         rb_AutoCompr_15compr = (RadioButton) findViewById(R.id.rb_AutoCompr_15compr);
+        tv_AutoCompr_txt_nbBoutAffich = (TextView) findViewById(R.id.tv_AutoCompr_txt_nbBoutAffich);
+        tv_AutoCompr_txt_nbreComprAffich = (TextView) findViewById(R.id.tv_AutoCompr_txt_nbreComprAffich);
+        tv_AutoCompr_txt_service = (TextView) findViewById(R.id.tv_AutoCompr_txt_service);
 
         connexStatus=(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
         network = connexStatus.getActiveNetworkInfo();
@@ -77,7 +86,6 @@ public class Automate_Comprime extends Activity {
                         readS7.Stop();
                         //writeS7.Stop();
                         try{
-
                             Thread.sleep(1000);
                         }
                         catch(Exception e){
@@ -92,9 +100,32 @@ public class Automate_Comprime extends Activity {
                 }
                 else{
                     Toast.makeText(this,"Connexion au réseau impossible",Toast.LENGTH_LONG).show();
+                    problemeCo();
                 }
                 break;
         }
+    }
+
+    public void problemeCo(){
+        String uri = "@android:drawable/presence_busy";
+        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+        img_AutoCompr_moteur.setImageDrawable(getResources().getDrawable(imageResource,this.getTheme()));
+
+        tv_AutoCompr_txt_service.setText("Problème de connexion");
+
+        readS7.Stop();
+
+        try{
+            Thread.sleep(1000);
+        }
+        catch(Exception e){
+            Log.i("Automate_Comprime","test");
+            e.printStackTrace();
+        }
+
+        bt_autoCond_ro.setText("Lire automate");
+
+        Toast.makeText(this,"Le traitement a été interrompu car l'application n'a pas pu se connecter à l'automate",Toast.LENGTH_LONG).show();
     }
 
     public void lectureAutomate(int[]donnees){
@@ -104,7 +135,7 @@ public class Automate_Comprime extends Activity {
         int d4=donnees[3];
 
 
-        Log.i("Automate_Comprime ","1 :" +String.valueOf(d2) + " valeur binaire :" +String.valueOf(0x0200 & d2));
+        Log.i("Automate_Comprime ","1 :" +String.valueOf(d4));
 
         bt_autoCond_selecteur.setText((0x0100 & d1) ==256 ? "Désactiver sélecteur" : "Activer sélecteur");
         bt_autoCond_arriveeFlacon.setText((0x0008 & d1) ==8 ? "Désactiver arrivée des flacons" : "Activer arrivée des flacons");
@@ -120,5 +151,8 @@ public class Automate_Comprime extends Activity {
         uri = ((0x0200 & d2) ==512 ? "@android:drawable/presence_online" : "@android:drawable/presence_offline");
         imageResource = getResources().getIdentifier(uri, null, getPackageName());
         img_AutoCompr_moteur.setImageDrawable(getResources().getDrawable(imageResource,this.getTheme()));
+
+        tv_AutoCompr_txt_nbBoutAffich.setText(String.valueOf(d4));
+        tv_AutoCompr_txt_nbreComprAffich.setText(rb_AutoCompr_5compr.isChecked()? "5" : ( rb_AutoCompr_10compr.isChecked()? "10" : (rb_AutoCompr_15compr.isChecked()? "15" : "0")));
     }
 }

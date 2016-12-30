@@ -1,5 +1,6 @@
 package be.heh.campus_technique.proj_android_s_alifierakis.lectureAutomate;
 
+import android.accounts.NetworkErrorException;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -24,6 +25,7 @@ public class ReadS7Conditionnement {
     private static final int MESSAGE_PRE_EXECUTE=1;
     private static final int MESSAGE_PROGRESS_UPDATE=2;
     private static final int MESSAGE_POST_EXECUTE=3;
+    private static final int MESSAGE_ERROR_EXECUTE=4;
 
     private AtomicBoolean isRunning=new AtomicBoolean(false);
 
@@ -49,6 +51,7 @@ public class ReadS7Conditionnement {
 
     public void Stop(){
         //isRunning.set(false);
+        Log.i("Thread : ","Ca a stoppé");
         comS7.Disconnect();
         isRunning.set(false);
         readThread.interrupt();
@@ -85,6 +88,12 @@ public class ReadS7Conditionnement {
         //tv_main_plc.setText("PLC : /!\\");
     }
 
+    private void errorExecute(){
+        for(Automate_Comprime a : automates7){
+            a.problemeCo();
+        }
+    }
+
     private Handler monHandler=new Handler(){
         @Override
         public void handleMessage(Message msg){
@@ -97,6 +106,9 @@ public class ReadS7Conditionnement {
                     break;
                 case MESSAGE_POST_EXECUTE:
                     downloadOnPostExecute();
+                    break;
+                case MESSAGE_ERROR_EXECUTE:
+                    errorExecute();
                     break;
                 default:
                     break;
@@ -159,14 +171,22 @@ public class ReadS7Conditionnement {
             }
             catch(Exception e){
                 e.printStackTrace();
+                ErrorMessage();
             }
         }
 
         private void sendPreExecuteMessage(int v) {
-            Message preExecuteMsg=new Message();
-            preExecuteMsg.what=MESSAGE_PRE_EXECUTE;
-            preExecuteMsg.arg1=v;
-            monHandler.sendMessage(preExecuteMsg);
+
+            if(v==-1){
+
+            }
+            else{
+                Message preExecuteMsg=new Message();
+                preExecuteMsg.what=MESSAGE_PRE_EXECUTE;
+                preExecuteMsg.arg1=v;
+                monHandler.sendMessage(preExecuteMsg);
+            }
+
         }
 
         private void sendProgressMessage(int[] i) {
@@ -181,6 +201,12 @@ public class ReadS7Conditionnement {
             Message postExecuteMsg=new Message();
             postExecuteMsg.what=MESSAGE_POST_EXECUTE;
             monHandler.sendMessage(postExecuteMsg);
+        }
+
+        private void ErrorMessage(){
+            Message errorExecuteMsg=new Message();
+            errorExecuteMsg.what=MESSAGE_ERROR_EXECUTE;
+            monHandler.sendMessage(errorExecuteMsg);
         }
     }
 }
