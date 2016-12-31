@@ -1,8 +1,10 @@
 package be.heh.campus_technique.proj_android_s_alifierakis.ecritureAutomate;
 
 import android.util.Log;
+import android.util.Xml;
 import android.view.View;
 
+import java.nio.charset.Charset;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import be.heh.campus_technique.proj_android_s_alifierakis.lectureAutomate.ReadS7Conditionnement;
@@ -23,7 +25,7 @@ public class WriteS7Conditionnement {
     private Thread writeThread;
     private S7Client comS7;
     private String[] parConnexion=new String[10];
-    private byte[] motCommande=new byte[10];
+    private byte[] motCommande=new byte[20];
 
 
     public WriteS7Conditionnement(){
@@ -55,16 +57,26 @@ public class WriteS7Conditionnement {
         public void run(){
 
             try{
+
                 comS7.SetConnectionType(S7.S7_BASIC);
                 Integer res=comS7.ConnectTo(parConnexion[0],Integer.valueOf(parConnexion[1]),Integer.valueOf(parConnexion[2]));
 
                 while(isRunning.get() && (res.equals(0))){
-                    Integer writePLC=comS7.WriteArea(S7.S7AreaDB,5,0,1,motCommande);
+                    Integer writePLC=comS7.WriteArea(S7.S7AreaDB,5,5,2,motCommande);
 
-                    if(res.equals(0) && writePLC.equals(0)){
+                    /*if(res.equals(0) && writePLC.equals(0)){
                         Log.i("res WRITE : ", String.valueOf(res) + " ********** " + String.valueOf(writePLC));
-                    }
+                    }*/
                 }
+
+                try{
+                    Thread.sleep(1000);
+                }
+                catch(Exception e){
+
+                    e.printStackTrace();
+                }
+
             }
             catch(Exception e){
                 e.printStackTrace();
@@ -74,9 +86,14 @@ public class WriteS7Conditionnement {
 
     }
 
-    public  void setWriteBool(int b, int v){
-        if(v==1) motCommande[0] = (byte) (b | motCommande[0]);
+    public  void setWriteBool(int bytes,int b, int v){
 
-        else motCommande[0] = (byte) (~b | motCommande[0]);
+        if(v==1) motCommande[bytes] = (byte) (b | motCommande[bytes]);
+
+        else motCommande[bytes] = (byte) (~b & motCommande[bytes]);
+
+        //String test = new String(motCommande, Charset.forName("UTF-8"));
+        Log.i("---------->"," changement de byte en action " + String.valueOf(bytes) + " " + String.valueOf(b) + " " + String.valueOf(v) + " " + Integer.toHexString(motCommande[bytes]));
+        int i=0;
     }
 }

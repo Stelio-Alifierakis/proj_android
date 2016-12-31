@@ -19,14 +19,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/creme"
-        android:padding="5sp"
-        android:layout_margin="15sp"
         android:orientation="vertical"
         >
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="10sp">
@@ -47,170 +44,192 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="10sp">
+            android:padding="5sp"
+            android:id="@+id/ll_AutoCompr_service"
+            android:layout_margin="15sp"
+            android:orientation="vertical"
+            android:background="@color/creme">
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/img_AutoCompr_moteur"
-                android:src="@android:drawable/presence_online" />
+                android:orientation="horizontal"
+                android:layout_marginBottom="10sp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_AutoCompr_txt_moteur"
-                android:textSize="10sp"
-                android:text="Moteur en marche" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_AutoCompr_moteur"
+                    android:src="@android:drawable/presence_online" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_AutoCompr_txt_moteur"
+                    android:textSize="10sp"
+                    android:text="Moteur en marche" />
 
             </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Activer arrivée des flacons"
-            android:textSize="10sp"
-            android:textAllCaps="false"
-            android:id="@+id/bt_autoCond_arriveeFlacon"
-            android:onClick="onAutoCondClickManager"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="10sp">
-
-            <ImageView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/img_AutoCompr_arriveeFlacon"
-                android:src="@android:drawable/presence_online" />
+                android:orientation="horizontal"
+                android:background="@color/vert_caca_oie"
+                android:padding="5sp"
+                android:layout_marginBottom="10sp">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Activer arrivée des flacons"
+                    android:textSize="10sp"
+                    android:textAllCaps="false"
+                    android:id="@+id/bt_autoCond_arriveeFlacon"
+                    android:onClick="onAutoCondClickManager"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_AutoCompr_arriveeFlacon"
+                    android:src="@android:drawable/presence_online" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_AutoCompr_txt_arriveeFlacon"
+                    android:textSize="10sp"
+                    android:text="Arrivée des flacons" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_AutoCompr_txt_arriveeFlacon"
-                android:textSize="10sp"
-                android:text="Arrivée des flacons" />
+                android:orientation="vertical"
+                android:background="@color/vert_caca_oie"
+                android:padding="5sp"
+                android:layout_marginBottom="10sp">
 
-        </LinearLayout>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Activer sélecteur"
+                    android:textSize="10sp"
+                    android:textAllCaps="false"
+                    android:id="@+id/bt_autoCond_selecteur"
+                    android:onClick="onAutoCondClickManager"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Activer sélecteur"
-            android:textSize="10sp"
-            android:textAllCaps="false"
-            android:id="@+id/bt_autoCond_selecteur"
-            android:onClick="onAutoCondClickManager"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_AutoCompr_txt_nbreCompr"
-            android:textSize="15sp"
-            android:text="Nombre de comprimés à mettre en bouteille" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_AutoCompr_txt_nbreCompr"
+                    android:textSize="15sp"
+                    android:text="Nombre de comprimés à mettre en bouteille" />
 
 
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
 
-            <RadioButton
-                android:layout_width="wrap_content"
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rb_AutoCompr_5compr"
+                        android:text="5 comprimés"
+                        android:textSize="10sp"
+                        android:checked="true"
+                        android:onClick="onAutoCondClickManager"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rb_AutoCompr_10compr"
+                        android:text="10 comprimés"
+                        android:textSize="10sp"
+                        android:onClick="onAutoCondClickManager"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rb_AutoCompr_15compr"
+                        android:text="15 comprimés"
+                        android:textSize="10sp"
+                        android:onClick="onAutoCondClickManager"/>
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rb_AutoCompr_5compr"
-                android:text="5 comprimés"
-                android:textSize="10sp"
-                android:checked="true"
-                android:onClick="onAutoCondClickManager"/>
+                android:background="@color/vert_caca_oie"
+                android:padding="5sp"
+                android:orientation="vertical"
+                >
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rb_AutoCompr_10compr"
-                android:text="10 comprimés"
-                android:textSize="10sp"
-                android:onClick="onAutoCondClickManager"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_AutoCompr_txt_nbCompr"
+                        android:textSize="15sp"
+                        android:text="Nombre de comprimés"/>
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rb_AutoCompr_15compr"
-                android:text="15 comprimés"
-                android:textSize="10sp"
-                android:onClick="onAutoCondClickManager"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_AutoCompr_txt_nbreComprAffich"
+                        android:textSize="15sp"
+                        android:text="0"
+                        android:padding="10sp"
+                        android:background="@color/creme"/>
 
-        </RadioGroup>
+                </LinearLayout>
 
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/vert_caca_oie"
-        android:padding="5sp"
-        android:layout_margin="15sp"
-        android:orientation="vertical"
-        >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_AutoCompr_txt_nbBout"
+                        android:textSize="15sp"
+                        android:text="Nombre de bouteilles remplies"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_AutoCompr_txt_nbCompr"
-                android:textSize="15sp"
-                android:text="Nombre de comprimés"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_AutoCompr_txt_nbBoutAffich"
+                        android:textSize="15sp"
+                        android:text="0"
+                        android:padding="10sp"
+                        android:background="@color/creme"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_AutoCompr_txt_nbreComprAffich"
-                android:textSize="15sp"
-                android:text="0"
-                android:padding="10sp"
-                android:background="@color/creme"/>
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Réinitialiser le compteur"
+                        android:textSize="10sp"
+                        android:textAllCaps="false"
+                        android:id="@+id/bt_autoCond_resetSelecteur"
+                        android:onClick="onAutoCondClickManager"/>
 
-        </LinearLayout>
+                </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_AutoCompr_txt_nbBout"
-                android:textSize="15sp"
-                android:text="Nombre de bouteilles remplies"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_AutoCompr_txt_nbBoutAffich"
-                android:textSize="15sp"
-                android:text="0"
-                android:padding="10sp"
-                android:background="@color/creme"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Réinitialiser le compteur"
-                android:textSize="10sp"
-                android:textAllCaps="false"
-                android:id="@+id/bt_autoCond_resetSelecteur"
-                android:onClick="onAutoCondClickManager"/>
+            </LinearLayout>
 
         </LinearLayout>
 
