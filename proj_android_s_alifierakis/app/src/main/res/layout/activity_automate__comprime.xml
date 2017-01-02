@@ -15,6 +15,21 @@
         android:textAllCaps="false"
         android:id="@+id/bt_autoCond_ro"
         android:onClick="onAutoCondClickManager"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Revenir à l'accueil"
+        android:textAllCaps="false"
+        android:id="@+id/bt_autoCond_retourAccueil"
+        android:onClick="onAutoCondClickManager"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Revenir au choix des automates"
+        android:textAllCaps="false"
+        android:id="@+id/bt_autoCond_retourChxAuto"
+        android:onClick="onAutoCondClickManager"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,6 +65,7 @@
             android:id="@+id/ll_AutoCompr_service"
             android:layout_margin="15sp"
             android:orientation="vertical"
+            android:visibility="invisible"
             android:background="@color/creme">
 
             <LinearLayout
@@ -192,7 +208,18 @@
                         android:textSize="15sp"
                         android:text="0"
                         android:padding="10sp"
-                        android:background="@color/creme"/>
+                        android:inputType="number"
+                        android:background="@color/creme"
+                        />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Changer le nombre de comprimés"
+                        android:textSize="10sp"
+                        android:textAllCaps="false"
+                        android:id="@+id/bt_autoCond_changeNbCompr"
+                        android:onClick="onAutoCondClickManager"/>
 
                 </LinearLayout>
 
@@ -216,6 +243,7 @@
                         android:textSize="15sp"
                         android:text="0"
                         android:padding="10sp"
+                        android:inputType="number"
                         android:background="@color/creme"/>
 
                     <Button
@@ -224,7 +252,7 @@
                         android:text="Réinitialiser le compteur"
                         android:textSize="10sp"
                         android:textAllCaps="false"
-                        android:id="@+id/bt_autoCond_resetSelecteur"
+                        android:id="@+id/bt_autoCond_resetCompteur"
                         android:onClick="onAutoCondClickManager"/>
 
                 </LinearLayout>

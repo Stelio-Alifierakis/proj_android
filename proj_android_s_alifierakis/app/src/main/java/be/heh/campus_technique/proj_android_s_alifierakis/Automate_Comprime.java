@@ -2,10 +2,13 @@ package be.heh.campus_technique.proj_android_s_alifierakis;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +18,13 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import be.heh.campus_technique.proj_android_s_alifierakis.ecritureAutomate.WriteS7Conditionnement;
 import be.heh.campus_technique.proj_android_s_alifierakis.lectureAutomate.ReadS7Conditionnement;
 
@@ -23,12 +33,18 @@ public class Automate_Comprime extends Activity {
     ImageView img_AutoCompr_arriveeFlacon;
     ImageView img_AutoCompr_moteur;
     ImageView img_AutoCompr_service;
+
     Button bt_autoCond_arriveeFlacon;
     Button bt_autoCond_ro;
+    Button bt_autoCond_changeNbCompr;
     Button bt_autoCond_selecteur;
+    Button bt_autoCond_resetCompteur;
+    Button bt_autoCond_retourChxAuto;
+
     RadioButton rb_AutoCompr_5compr;
     RadioButton rb_AutoCompr_10compr;
     RadioButton rb_AutoCompr_15compr;
+
     TextView tv_AutoCompr_txt_nbBoutAffich;
     TextView tv_AutoCompr_txt_nbreComprAffich;
     TextView tv_AutoCompr_txt_service;
@@ -41,6 +57,12 @@ public class Automate_Comprime extends Activity {
     private ReadS7Conditionnement readS7;
     private WriteS7Conditionnement writeS7;
 
+    private String ipAdr;
+    private String rack;
+    private String slot;
+
+    SharedPreferences pref_data;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,12 +73,18 @@ public class Automate_Comprime extends Activity {
         img_AutoCompr_arriveeFlacon = (ImageView) findViewById(R.id.img_AutoCompr_arriveeFlacon);
         img_AutoCompr_moteur = (ImageView) findViewById(R.id.img_AutoCompr_moteur);
         img_AutoCompr_service = (ImageView) findViewById(R.id.img_AutoCompr_service);
+
         bt_autoCond_ro = (Button) findViewById(R.id.bt_autoCond_ro);
         bt_autoCond_arriveeFlacon = (Button) findViewById(R.id.bt_autoCond_arriveeFlacon);
         bt_autoCond_selecteur = (Button) findViewById(R.id.bt_autoCond_selecteur);
+        bt_autoCond_changeNbCompr = (Button) findViewById(R.id.bt_autoCond_changeNbCompr);
+        bt_autoCond_resetCompteur = (Button) findViewById(R.id.bt_autoCond_resetCompteur);
+        bt_autoCond_retourChxAuto = (Button) findViewById(R.id.bt_autoCond_retourChxAuto);
+
         rb_AutoCompr_5compr = (RadioButton) findViewById(R.id.rb_AutoCompr_5compr);
         rb_AutoCompr_10compr = (RadioButton) findViewById(R.id.rb_AutoCompr_10compr);
         rb_AutoCompr_15compr = (RadioButton) findViewById(R.id.rb_AutoCompr_15compr);
+
         tv_AutoCompr_txt_nbBoutAffich = (TextView) findViewById(R.id.tv_AutoCompr_txt_nbBoutAffich);
         tv_AutoCompr_txt_nbreComprAffich = (TextView) findViewById(R.id.tv_AutoCompr_txt_nbreComprAffich);
         tv_AutoCompr_txt_service = (TextView) findViewById(R.id.tv_AutoCompr_txt_service);
@@ -65,20 +93,69 @@ public class Automate_Comprime extends Activity {
         network = connexStatus.getActiveNetworkInfo();
 
         ll_AutoCompr_service.setEnabled(false);
+
+        try{
+            FileInputStream ins=openFileInput("autom1.txt");
+            BufferedReader reader=new BufferedReader(new InputStreamReader(ins));
+            StringBuilder out=new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null){
+                out.append(line);
+            }
+
+            reader.close();
+            ins.close();
+
+            String[] confs=out.toString().split("#");
+            ipAdr=confs[0];
+            rack=confs[1];
+            slot=confs[2];
+
+        }
+        catch (FileNotFoundException ex){
+            ex.printStackTrace();
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
+        }
+
+        /*pref_data = PreferenceManager.getDefaultSharedPreferences(getApplication());
+        ipAdr=pref_data.getString("ipAutom1","NULL");
+        rack=pref_data.getString("rackAutom1","NULL");
+        slot=pref_data.getString("slotAutom1","NULL");*/
     }
 
     public void onAutoCondClickManager(View v){
         switch(v.getId()){
+            case R.id.bt_autoCond_retourChxAuto:
+
+                if(bt_autoCond_ro.getText().equals("Se déconnecter")){
+                    readS7.Stop();
+                    writeS7.Stop();
+                    try{
+                        Thread.sleep(1000);
+                    }
+                    catch(Exception e){
+                        Log.i("Automate_Comprime","test");
+                        e.printStackTrace();
+                    }
+                }
+
+                Intent intent = new Intent(this,Connection.class);
+                startActivity(intent);
+                break;
             case R.id.bt_autoCond_ro:
+                Log.i("test co",ipAdr + " "+ rack + " "+ slot);
                 if(network !=null && network.isConnectedOrConnecting()){
                     if(bt_autoCond_ro.getText().equals("Lire automate")){
-                        ll_AutoCompr_service.setEnabled(true);
+                        ll_AutoCompr_service.setVisibility(View.VISIBLE);
                         Toast.makeText(this,network.getTypeName(),Toast.LENGTH_LONG).show();
                         bt_autoCond_ro.setText("Se déconnecter");
                         readS7=new ReadS7Conditionnement(this,v);
                         //readS7.Start("192.168.10.220","0","2");
-                        readS7.Start("192.168.0.220","0","2");
-
+                        //readS7.Start("192.168.0.220","0","2");
+                        readS7.Start(ipAdr,rack,slot);
                         try{
                             Thread.sleep(1000);
                         }
@@ -88,7 +165,8 @@ public class Automate_Comprime extends Activity {
 
                         writeS7=new WriteS7Conditionnement();
                         //writeS7.Start("192.168.10.220","0","2");
-                        writeS7.Start("192.168.0.220","0","2");
+                        //writeS7.Start("192.168.0.220","0","2");
+                        writeS7.Start(ipAdr,rack,slot);
                     }
                     else{
                         readS7.Stop();
@@ -111,11 +189,13 @@ public class Automate_Comprime extends Activity {
                         tv_AutoCompr_txt_service.setText("Application non connectée à l'automate");
 
                         Toast.makeText(this,"Le traitement a été interrompu par l'utilisateur",Toast.LENGTH_LONG).show();
+                        ll_AutoCompr_service.setVisibility(View.INVISIBLE);
                     }
                 }
                 else{
                     Toast.makeText(this,"Connexion au réseau impossible",Toast.LENGTH_LONG).show();
                     problemeCo();
+                    ll_AutoCompr_service.setVisibility(View.INVISIBLE);
                 }
                 break;
             case R.id.rb_AutoCompr_5compr:
@@ -139,6 +219,13 @@ public class Automate_Comprime extends Activity {
                 break;
             case R.id.bt_autoCond_arriveeFlacon:
                 writeS7.setWriteBool(1,8, bt_autoCond_arriveeFlacon.getText()=="Activer arrivée des flacons" ? 1 : 0);
+                break;
+            case R.id.bt_autoCond_changeNbCompr:
+                writeS7.setWriteByte(3,Integer.parseInt(tv_AutoCompr_txt_nbreComprAffich.getText().toString()));
+                break;
+            case R.id.bt_autoCond_resetCompteur:
+
+                writeS7.setWriteInt(0);
                 break;
         }
     }

@@ -52,7 +52,7 @@
             android:gravity="center_vertical"
             android:background="@color/vert_caca_oie"
             android:layout_margin="10sp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:padding="10sp">
 
             <TextView
@@ -68,6 +68,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/vert_gris"
+                android:inputType="number|numberDecimal"
+                android:digits="0123456789."
                 android:hint="Ip de l'automate"/>
 
             <TextView
@@ -83,6 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/vert_gris"
+                android:inputType="number"
                 android:hint="Rack de l'automate" />
 
             <TextView
@@ -98,6 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/vert_gris"
+                android:inputType="number"
                 android:hint="Slot de l'automate"/>
 
             <Button

@@ -1,15 +1,12 @@
 package be.heh.campus_technique.proj_android_s_alifierakis.lectureAutomate;
 
-import android.accounts.NetworkErrorException;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import java.io.Console;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import be.heh.campus_technique.proj_android_s_alifierakis.Automate_Comprime;
@@ -28,6 +25,7 @@ public class ReadS7Conditionnement {
     private static final int MESSAGE_ERROR_EXECUTE=4;
 
     private AtomicBoolean isRunning=new AtomicBoolean(false);
+    private  boolean running = false;
 
     private View vi_main_ui;
 
@@ -53,6 +51,7 @@ public class ReadS7Conditionnement {
         //isRunning.set(false);
         Log.i("Thread : ","Ca a stoppé");
         comS7.Disconnect();
+        running=false;
         isRunning.set(false);
         readThread.interrupt();
     }
@@ -64,6 +63,7 @@ public class ReadS7Conditionnement {
             param[2]=s;
 
             readThread.start();
+            running=true;
             isRunning.set(true);
         }
     }
@@ -115,6 +115,10 @@ public class ReadS7Conditionnement {
             }
         }
     };
+
+    public boolean getRunning() {
+        return running;
+    }
 
     private class AutomateS7 implements  Runnable{
 
