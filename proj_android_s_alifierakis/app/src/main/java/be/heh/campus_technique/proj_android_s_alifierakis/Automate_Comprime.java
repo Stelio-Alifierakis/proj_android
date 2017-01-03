@@ -48,6 +48,9 @@ public class Automate_Comprime extends Activity {
     TextView tv_AutoCompr_txt_nbBoutAffich;
     TextView tv_AutoCompr_txt_nbreComprAffich;
     TextView tv_AutoCompr_txt_service;
+    TextView tv_AutoCompr_txtIp;
+    TextView tv_AutoCompr_txtRack;
+    TextView tv_AutoCompr_txtSlot;
 
     LinearLayout ll_AutoCompr_service;
 
@@ -61,7 +64,7 @@ public class Automate_Comprime extends Activity {
     private String rack;
     private String slot;
 
-    SharedPreferences pref_data;
+    //SharedPreferences pref_data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +91,9 @@ public class Automate_Comprime extends Activity {
         tv_AutoCompr_txt_nbBoutAffich = (TextView) findViewById(R.id.tv_AutoCompr_txt_nbBoutAffich);
         tv_AutoCompr_txt_nbreComprAffich = (TextView) findViewById(R.id.tv_AutoCompr_txt_nbreComprAffich);
         tv_AutoCompr_txt_service = (TextView) findViewById(R.id.tv_AutoCompr_txt_service);
+        tv_AutoCompr_txtIp = (TextView) findViewById(R.id.tv_AutoCompr_txtIp);
+        tv_AutoCompr_txtRack = (TextView) findViewById(R.id.tv_AutoCompr_txtRack);
+        tv_AutoCompr_txtSlot = (TextView) findViewById(R.id.tv_AutoCompr_txtSlot);
 
         connexStatus=(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
         network = connexStatus.getActiveNetworkInfo();
@@ -124,6 +130,10 @@ public class Automate_Comprime extends Activity {
         ipAdr=pref_data.getString("ipAutom1","NULL");
         rack=pref_data.getString("rackAutom1","NULL");
         slot=pref_data.getString("slotAutom1","NULL");*/
+
+        tv_AutoCompr_txtIp.setText(tv_AutoCompr_txtIp.getText() + " " + ipAdr);
+        tv_AutoCompr_txtRack.setText(tv_AutoCompr_txtRack.getText() + " " + rack);
+        tv_AutoCompr_txtSlot.setText(tv_AutoCompr_txtSlot.getText() + " " + slot);
     }
 
     public void onAutoCondClickManager(View v){

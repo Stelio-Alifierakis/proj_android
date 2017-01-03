@@ -8,13 +8,7 @@
     android:gravity="center"
     tools:context="be.heh.campus_technique.proj_android_s_alifierakis.Automate_Comprime" >
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lire automate"
-        android:textAllCaps="false"
-        android:id="@+id/bt_autoCond_ro"
-        android:onClick="onAutoCondClickManager"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,6 +24,45 @@
         android:textAllCaps="false"
         android:id="@+id/bt_autoCond_retourChxAuto"
         android:onClick="onAutoCondClickManager"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/creme"
+        android:layout_margin="15sp"
+        android:padding="5sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_AutoCompr_txtIp"
+            android:textSize="10sp"
+            android:text="Adresse IP de l'automate :" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_AutoCompr_txtRack"
+            android:textSize="10sp"
+            android:text="Rack de l'automate :" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_AutoCompr_txtSlot"
+            android:textSize="10sp"
+            android:text="Slot de l'automate :" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lire automate"
+            android:textAllCaps="false"
+            android:id="@+id/bt_autoCond_ro"
+            android:onClick="onAutoCondClickManager"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

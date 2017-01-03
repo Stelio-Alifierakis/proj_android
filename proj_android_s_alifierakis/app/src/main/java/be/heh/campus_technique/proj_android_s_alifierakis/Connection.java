@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -57,6 +58,33 @@ public class Connection extends Activity {
         et_connection_rackAUtomate2=(EditText) findViewById(R.id.et_connection_rackAUtomate2);
         et_connection_slotAUtomate2=(EditText) findViewById(R.id.et_connection_slotAUtomate2);
 
+        try{
+            FileInputStream ins=openFileInput("autom1.txt");
+            BufferedReader reader=new BufferedReader(new InputStreamReader(ins));
+            StringBuilder out=new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null){
+                out.append(line);
+            }
+
+            reader.close();
+            ins.close();
+
+            String[] confs=out.toString().split("#");
+            Toast.makeText(this,confs[0]+ " " + confs[1] + " " + confs[2],Toast.LENGTH_LONG).show();
+            et_connection_ipAUtomate1.setText(confs[0]);
+            et_connection_rackAUtomate1.setText(confs[1]);
+            et_connection_slotAUtomate1.setText(confs[2]);
+
+        }
+        catch (FileNotFoundException ex){
+            ex.printStackTrace();
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
+        }
+
         //pref_data = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     }
 
@@ -70,32 +98,6 @@ public class Connection extends Activity {
                     et_connection_slotAUtomate1.setText(pref_data.getString("slotAutom1","NULL"));
                 }*/
 
-                try{
-                    FileInputStream ins=openFileInput("autom1.txt");
-                    BufferedReader reader=new BufferedReader(new InputStreamReader(ins));
-                    StringBuilder out=new StringBuilder();
-                    String line;
-
-                    while ((line = reader.readLine()) != null){
-                        out.append(line);
-                    }
-
-                    reader.close();
-                    ins.close();
-
-                    String[] confs=out.toString().split("#");
-                    et_connection_ipAUtomate1.setText(confs[0]);
-                    et_connection_rackAUtomate1.setText(confs[1]);
-                    et_connection_slotAUtomate1.setText(confs[2]);
-
-                }
-                catch (FileNotFoundException ex){
-                    ex.printStackTrace();
-                }
-                catch (IOException ex){
-                    ex.printStackTrace();
-                }
-
                 ll_connection_coAutomate1.setVisibility(View.VISIBLE);
                 ll_connection_coAutomate2.setVisibility(View.GONE);
                 break;
@@ -104,9 +106,11 @@ public class Connection extends Activity {
                 ll_connection_coAutomate1.setVisibility(View.GONE);
                 break;
             case R.id.bt_connection_text_lancerAutomate1 :
-                String str=et_connection_ipAUtomate1.getText().toString()+"#"+et_connection_rackAUtomate1.getText().toString()+"#"+et_connection_slotAUtomate1.getText().toString();
+                String str=et_connection_ipAUtomate1.getText().toString()+"#"+et_connection_rackAUtomate1.getText().toString()+"#"+et_connection_slotAUtomate1.getText().toString()+"#";
+                Toast.makeText(this,str,Toast.LENGTH_LONG).show();
                 try{
-                    FileOutputStream ous=openFileOutput("autom1.txt",MODE_APPEND);
+                    //FileOutputStream ous=openFileOutput("autom1.txt",MODE_APPEND);
+                    FileOutputStream ous=openFileOutput("autom1.txt",MODE_PRIVATE);
                     byte[] buff;
                     buff=str.toString().getBytes();
                     ous.write(buff);
