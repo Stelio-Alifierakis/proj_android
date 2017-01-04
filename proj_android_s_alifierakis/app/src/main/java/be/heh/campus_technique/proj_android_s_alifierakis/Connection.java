@@ -85,10 +85,37 @@ public class Connection extends Activity {
             ex.printStackTrace();
         }
 
+        try{
+            FileInputStream ins=openFileInput("autom2.txt");
+            BufferedReader reader=new BufferedReader(new InputStreamReader(ins));
+            StringBuilder out=new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null){
+                out.append(line);
+            }
+
+            reader.close();
+            ins.close();
+
+            String[] confs=out.toString().split("#");
+            Toast.makeText(this,confs[0]+ " " + confs[1] + " " + confs[2],Toast.LENGTH_LONG).show();
+            et_connection_ipAUtomate2.setText(confs[0]);
+            et_connection_rackAUtomate2.setText(confs[1]);
+            et_connection_slotAUtomate2.setText(confs[2]);
+
+        }
+        catch (FileNotFoundException ex){
+            ex.printStackTrace();
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
+        }
         //pref_data = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     }
 
     public void onConnexionClickManager(View v){
+
         switch(v.getId()){
             case R.id.bt_connection_text_co1 :
 
@@ -107,7 +134,7 @@ public class Connection extends Activity {
                 break;
             case R.id.bt_connection_text_lancerAutomate1 :
                 String str=et_connection_ipAUtomate1.getText().toString()+"#"+et_connection_rackAUtomate1.getText().toString()+"#"+et_connection_slotAUtomate1.getText().toString()+"#";
-                Toast.makeText(this,str,Toast.LENGTH_LONG).show();
+                //Toast.makeText(this,str,Toast.LENGTH_LONG).show();
                 try{
                     //FileOutputStream ous=openFileOutput("autom1.txt",MODE_APPEND);
                     FileOutputStream ous=openFileOutput("autom1.txt",MODE_PRIVATE);
@@ -132,6 +159,29 @@ public class Connection extends Activity {
 
                 Intent intent = new Intent(this,Automate_Comprime.class);
                 startActivity(intent);
+                finish();
+
+                break;
+            case R.id.bt_connection_text_lancerAutomate2 :
+                String str2=et_connection_ipAUtomate2.getText().toString()+"#"+et_connection_rackAUtomate2.getText().toString()+"#"+et_connection_slotAUtomate2.getText().toString()+"#";
+
+                try{
+                    //FileOutputStream ous=openFileOutput("autom1.txt",MODE_APPEND);
+                    FileOutputStream ous=openFileOutput("autom2.txt",MODE_PRIVATE);
+                    byte[] buff;
+                    buff=str2.toString().getBytes();
+                    ous.write(buff);
+                    ous.close();
+                }
+                catch (FileNotFoundException ex){
+                    ex.printStackTrace();
+                }
+                catch (IOException ex){
+                    ex.printStackTrace();
+                }
+
+                Intent intent2 = new Intent(this,Automate_Regulation.class);
+                startActivity(intent2);
                 finish();
 
                 break;

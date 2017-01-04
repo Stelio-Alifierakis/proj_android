@@ -190,7 +190,6 @@ public class Automate_Comprime extends Activity {
                         }
 
                         bt_autoCond_ro.setText("Lire automate");
-                        ll_AutoCompr_service.setEnabled(false);
 
                         String uri = "@android:drawable/presence_offline";
                         int imageResource = getResources().getIdentifier(uri, null, getPackageName());
@@ -199,13 +198,13 @@ public class Automate_Comprime extends Activity {
                         tv_AutoCompr_txt_service.setText("Application non connectée à l'automate");
 
                         Toast.makeText(this,"Le traitement a été interrompu par l'utilisateur",Toast.LENGTH_LONG).show();
-                        ll_AutoCompr_service.setVisibility(View.INVISIBLE);
+                        ll_AutoCompr_service.setVisibility(View.GONE);
                     }
                 }
                 else{
                     Toast.makeText(this,"Connexion au réseau impossible",Toast.LENGTH_LONG).show();
                     problemeCo();
-                    ll_AutoCompr_service.setVisibility(View.INVISIBLE);
+                    ll_AutoCompr_service.setVisibility(View.GONE);
                 }
                 break;
             case R.id.rb_AutoCompr_5compr:
@@ -276,7 +275,7 @@ public class Automate_Comprime extends Activity {
 
         tv_AutoCompr_txt_service.setText("Automate en service");
 
-        Log.i("Automate_Comprime ","1 :" +String.valueOf(d4));
+        //Log.i("Automate_Comprime ","1 :" +String.valueOf(d4));
 
         bt_autoCond_selecteur.setText((0x0100 & d1) ==256 ? "Désactiver sélecteur" : "Activer sélecteur");
         bt_autoCond_arriveeFlacon.setText((0x0008 & d1) ==8 ? "Désactiver arrivée des flacons" : "Activer arrivée des flacons");

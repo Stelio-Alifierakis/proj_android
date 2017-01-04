@@ -1,13 +1,340 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_automate__regulation"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="be.heh.campus_technique.proj_android_s_alifierakis.Automate_Regulation">
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context="be.heh.campus_technique.proj_android_s_alifierakis.Automate_Comprime" >
 
-</RelativeLayout>
+
+<Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Revenir à l'accueil"
+        android:textAllCaps="false"
+        android:id="@+id/bt_autoReg_retourAccueil"
+        android:onClick="onAutoRegClickManager"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Revenir au choix des automates"
+        android:textAllCaps="false"
+        android:id="@+id/bt_autoReg_retourChxAuto"
+        android:onClick="onAutoRegClickManager"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/creme"
+                android:layout_margin="15sp"
+                android:padding="5sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_AutoReg_txtIp"
+                    android:textSize="10sp"
+                    android:text="Adresse IP de l'automate :" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_AutoReg_txtRack"
+                    android:textSize="10sp"
+                    android:text="Rack de l'automate :" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_AutoReg_txtSlot"
+                    android:textSize="10sp"
+                    android:text="Slot de l'automate :" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lire automate"
+                    android:textAllCaps="false"
+                    android:id="@+id/bt_autoReg_ro"
+                    android:onClick="onAutoRegClickManager"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10sp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_AutoReg_service"
+                    android:src="@android:drawable/presence_offline" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_AutoReg_txt_service"
+                    android:textSize="10sp"
+                    android:text="Automate pas encore connecté" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/ll_AutoReg_auto"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/creme"
+                    android:layout_margin="15sp"
+                    android:padding="5sp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_AutoReg_progress"
+                        android:textSize="10sp"
+                        android:text="Niveau du liquide" />
+
+                    <ProgressBar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:id="@+id/pb_AutoReg_nivLiq"
+                        android:layout_margin="10sp" />
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TableRow>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/img_AutoReg_v2"
+                                    android:src="@android:drawable/presence_online" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/tv_AutoReg_v2"
+                                    android:textSize="10sp"
+                                    android:text="Ouverture de la valve 2" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/img_AutoReg_v3"
+                                    android:src="@android:drawable/presence_online" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/tv_AutoReg_v3"
+                                    android:textSize="10sp"
+                                    android:text="Ouverture de la valve 3" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/img_AutoReg_v4"
+                                    android:src="@android:drawable/presence_online" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/tv_AutoReg_v4"
+                                    android:textSize="10sp"
+                                    android:text="Ouverture de la valve 4" />
+
+                            </LinearLayout>
+                        </TableRow>
+                        <TableRow>
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ouvrir la valve 2"
+                                android:textSize="10sp"
+                                android:textAllCaps="false"
+                                android:id="@+id/bt_autoReg_v2"
+                                android:onClick="onAutoRegClickManager"/>
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ouvrir la valve 3"
+                                android:textSize="10sp"
+                                android:textAllCaps="false"
+                                android:id="@+id/bt_autoReg_v3"
+                                android:onClick="onAutoRegClickManager"/>
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ouvrir la valve 4"
+                                android:textSize="10sp"
+                                android:textAllCaps="false"
+                                android:id="@+id/bt_autoReg_v4"
+                                android:onClick="onAutoRegClickManager"/>
+
+                        </TableRow>
+                    </TableLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/img_AutoReg_v1"
+                            android:src="@android:drawable/presence_online" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_AutoReg_v1"
+                            android:textSize="10sp"
+                            android:text="Ouverture de la valve 1" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ouvrir la valve 1"
+                            android:textSize="10sp"
+                            android:textAllCaps="false"
+                            android:id="@+id/bt_autoReg_v1"
+                            android:onClick="onAutoRegClickManager"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/creme"
+                    android:layout_margin="15sp"
+                    android:padding="5sp">
+
+                    <LinearLayout
+                        android:layout_margin="5sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/vert_caca_oie"
+                        android:padding="5sp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_AutoReg_SetPoint"
+                            android:textSize="15sp"
+                            android:text="Set Point"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_AutoReg_SP"
+                            android:textSize="15sp"
+                            android:text="0"
+                            android:padding="10sp"
+                            android:inputType="number"
+                            android:background="@color/creme"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_AutoReg_Man"
+                            android:textSize="15sp"
+                            android:text="Manual"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_AutoReg_manuel"
+                            android:textSize="15sp"
+                            android:text="0"
+                            android:padding="10sp"
+                            android:inputType="number"
+                            android:background="@color/creme"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_AutoReg_MotPilotV"
+                            android:textSize="15sp"
+                            android:text="Mot pilotage vanne"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_AutoReg_mpv"
+                            android:textSize="15sp"
+                            android:text="0"
+                            android:padding="10sp"
+                            android:inputType="number"
+                            android:background="@color/creme"
+                            />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+
+</LinearLayout>
