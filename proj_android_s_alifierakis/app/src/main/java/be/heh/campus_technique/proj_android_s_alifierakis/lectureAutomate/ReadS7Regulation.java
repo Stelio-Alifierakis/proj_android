@@ -168,15 +168,13 @@ public class ReadS7Regulation {
                             e.printStackTrace();
                         }
                     }
-
-                    sendPostExecuteMessage();
                 }
+                sendPostExecuteMessage();
             }
             catch(Exception e){
                 e.printStackTrace();
                 ErrorMessage();
             }
-
         }
 
         private void sendPreExecuteMessage(int v){

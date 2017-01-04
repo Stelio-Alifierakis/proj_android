@@ -1,12 +1,14 @@
 package be.heh.campus_technique.proj_android_s_alifierakis;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -60,6 +62,9 @@ public class Automate_Regulation extends Activity {
     private String slot;
 
     private ReadS7Regulation readS7;
+    private Vibrator vib;
+
+    private  Vibration vibb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,8 @@ public class Automate_Regulation extends Activity {
         setContentView(R.layout.activity_automate__regulation);
 
         ll_AutoReg_auto = (LinearLayout) findViewById(R.id.ll_AutoReg_auto);
+
+        pb_AutoReg_nivLiq = (ProgressBar) findViewById(R.id.pb_AutoReg_nivLiq);
 
         bt_autoReg_retourAccueil = (Button) findViewById(R.id.bt_autoReg_retourAccueil);
         bt_autoReg_retourChxAuto = (Button) findViewById(R.id.bt_autoReg_retourChxAuto);
@@ -92,6 +99,11 @@ public class Automate_Regulation extends Activity {
 
         connexStatus=(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
         network = connexStatus.getActiveNetworkInfo();
+
+        AlertDialog.Builder builder= new AlertDialog.Builder(this);
+
+        vib= (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibb=new Vibration(vib, builder);
 
         try{
             FileInputStream ins=openFileInput("autom2.txt");
@@ -131,9 +143,10 @@ public class Automate_Regulation extends Activity {
                 if(bt_autoReg_ro.getText().equals("Se déconnecter")){
 
                     readS7.Stop();
+                    vibb.stop();
                     //writeS7.Stop();
                     try{
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
                     }
                     catch(Exception e){
                         Log.i("Automate_Comprime","test");
@@ -170,6 +183,7 @@ public class Automate_Regulation extends Activity {
                     else{
 
                         readS7.Stop();
+                        vibb.stop();
                         //writeS7.Stop();
                         try{
                             Thread.sleep(1000);
@@ -255,5 +269,18 @@ public class Automate_Regulation extends Activity {
         imageResource = getResources().getIdentifier(uri, null, getPackageName());
         img_AutoReg_v4.setImageDrawable(getResources().getDrawable(imageResource,this.getTheme()));
 
+        bt_autoReg_v1.setText((0x0200 & d1) ==512 ? "Ouvrir la valve 1" : "Fermer la valve 1");
+        bt_autoReg_v2.setText((0x0400 & d1) ==512 ? "Ouvrir la valve 2" : "Fermer la valve 2");
+        bt_autoReg_v3.setText((0x0800 & d1) ==512 ? "Ouvrir la valve 3" : "Fermer la valve 3");
+        bt_autoReg_v4.setText((0x1000 & d1) ==512 ? "Ouvrir la valve 4" : "Fermer la valve 4");
+
+        pb_AutoReg_nivLiq.setProgress(d2/10);
+
+        if(d2/10>=100){
+            vibb.Start();
+        }
+        else if (d2/10<100){
+            vibb.stop();
+        }
     }
 }
