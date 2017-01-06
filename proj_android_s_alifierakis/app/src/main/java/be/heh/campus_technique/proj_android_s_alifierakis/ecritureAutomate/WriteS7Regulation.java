@@ -1,36 +1,31 @@
 package be.heh.campus_technique.proj_android_s_alifierakis.ecritureAutomate;
 
 import android.util.Log;
-import android.util.Xml;
 import android.view.View;
 
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import be.heh.campus_technique.proj_android_s_alifierakis.lectureAutomate.ReadS7Conditionnement;
 import simaticS7.S7;
 import simaticS7.S7Client;
 
 /**
- * Created by steli on 23-12-16.
+ * Created by steli on 05-01-17.
  */
 
-public class WriteS7Conditionnement {
-
+public class WriteS7Regulation {
     private AtomicBoolean isRunning=new AtomicBoolean(false);
     private  boolean running = false;
 
     private View vi_main_ui;
 
-    private WriteS7Conditionnement.AutomateS7 plcS7;
+    private AutomateS7 plcS7;
     private Thread writeThread;
     private S7Client comS7;
     private String[] parConnexion=new String[10];
-    private byte[] motCommande=new byte[10];
-    private byte[] motCommande2=new byte[2];
+    private byte[] motCommande=new byte[2];
+    private byte[] motCommande2=new byte[8];
 
-    public WriteS7Conditionnement(){
+    public WriteS7Regulation(){
         comS7=new S7Client();
         plcS7=new AutomateS7();
         writeThread=new Thread(plcS7);
@@ -61,17 +56,12 @@ public class WriteS7Conditionnement {
         public void run(){
 
             try{
-
                 comS7.SetConnectionType(S7.S7_BASIC);
                 Integer res=comS7.ConnectTo(parConnexion[0],Integer.valueOf(parConnexion[1]),Integer.valueOf(parConnexion[2]));
 
                 while(isRunning.get() && (res.equals(0))){
-                    Integer writePLC=comS7.WriteArea(S7.S7AreaDB,5,5,5,motCommande);
-                    writePLC = comS7.WriteArea(S7.S7AreaDB,5,20,2,motCommande2);
-
-                    /*if(res.equals(0) && writePLC.equals(0)){
-                        Log.i("res WRITE : ", String.valueOf(res) + " ********** " + String.valueOf(writePLC));
-                    }*/
+                    Integer writePLC=comS7.WriteArea(S7.S7AreaDB,5,2,2,motCommande);
+                    writePLC = comS7.WriteArea(S7.S7AreaDB,5,28,8,motCommande2);
                 }
 
                 try{
@@ -81,7 +71,6 @@ public class WriteS7Conditionnement {
 
                     e.printStackTrace();
                 }
-
             }
             catch(Exception e){
                 e.printStackTrace();
@@ -97,21 +86,14 @@ public class WriteS7Conditionnement {
 
         else motCommande[bytes] = (byte) (~b & motCommande[bytes]);
 
-        //String test = new String(motCommande, Charset.forName("UTF-8"));
-        //Log.i("---------->"," changement de byte en action " + String.valueOf(bytes) + " " + String.valueOf(b) + " " + String.valueOf(v) + " " + Integer.toHexString(motCommande[bytes]));
-        //int i=0;
     }
 
-    public void setWriteByte(int bytes,int b){
-        motCommande[bytes] = (byte) b;
-       //Log.i("---------->",Integer.toHexString(motCommande[bytes]));
+    public void setWriteInt(int b, int pose){
+        S7.SetWordAt(motCommande2,pose,b);
+        for(byte bb : motCommande2){
+            Log.i("verif byte",b + " " + pose + " " +Byte.toString(bb));
+        }
+
     }
 
-    public void setWriteInt(int b){
-        S7.SetWordAt(motCommande2,0,b);
-    }
-
-    public boolean getRunning() {
-        return running;
-    }
 }

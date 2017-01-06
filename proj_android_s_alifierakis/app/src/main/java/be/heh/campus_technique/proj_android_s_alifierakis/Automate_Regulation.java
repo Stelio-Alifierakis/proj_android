@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import be.heh.campus_technique.proj_android_s_alifierakis.ecritureAutomate.WriteS7Regulation;
 import be.heh.campus_technique.proj_android_s_alifierakis.lectureAutomate.ReadS7Regulation;
 
 public class Automate_Regulation extends Activity {
@@ -37,6 +38,7 @@ public class Automate_Regulation extends Activity {
     Button bt_autoReg_v3;
     Button bt_autoReg_v4;
     Button bt_autoReg_v1;
+    Button bt_autoReg_valEcriture;
 
     TextView tv_AutoReg_txtIp;
     TextView tv_AutoReg_txtRack;
@@ -62,14 +64,20 @@ public class Automate_Regulation extends Activity {
     private String slot;
 
     private ReadS7Regulation readS7;
+    private WriteS7Regulation writeS7;
+
     private Vibrator vib;
 
     private  Vibration vibb;
+
+    private int nivLiq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_automate__regulation);
+
+        nivLiq=0;
 
         ll_AutoReg_auto = (LinearLayout) findViewById(R.id.ll_AutoReg_auto);
 
@@ -82,6 +90,7 @@ public class Automate_Regulation extends Activity {
         bt_autoReg_v3 = (Button) findViewById(R.id.bt_autoReg_v3);
         bt_autoReg_v4 = (Button) findViewById(R.id.bt_autoReg_v4);
         bt_autoReg_v1 = (Button) findViewById(R.id.bt_autoReg_v1);
+        bt_autoReg_valEcriture = (Button) findViewById(R.id.bt_autoReg_valEcriture);
 
         tv_AutoReg_txtIp = (TextView) findViewById(R.id.tv_AutoReg_txtIp);
         tv_AutoReg_txtRack = (TextView) findViewById(R.id.tv_AutoReg_txtRack);
@@ -144,7 +153,7 @@ public class Automate_Regulation extends Activity {
 
                     readS7.Stop();
                     vibb.stop();
-                    //writeS7.Stop();
+                    writeS7.Stop();
                     try{
                         Thread.sleep(500);
                     }
@@ -177,14 +186,14 @@ public class Automate_Regulation extends Activity {
                             e.printStackTrace();
                         }
 
-                        //writeS7=new WriteS7Conditionnement();
-                        //writeS7.Start(ipAdr,rack,slot);
+                        writeS7=new WriteS7Regulation();
+                        writeS7.Start(ipAdr,rack,slot);
                     }
                     else{
 
                         readS7.Stop();
                         vibb.stop();
-                        //writeS7.Stop();
+                        writeS7.Stop();
                         try{
                             Thread.sleep(1000);
                         }
@@ -212,6 +221,25 @@ public class Automate_Regulation extends Activity {
                     ll_AutoReg_auto.setVisibility(View.GONE);
                 }
                 break;
+            case R.id.bt_autoReg_valEcriture:
+                //writeS7.setWriteInt(pb_AutoReg_nivLiq.getProgress(),0); nivLiq
+                writeS7.setWriteInt(nivLiq,0);
+                writeS7.setWriteInt(Integer.parseInt(tv_AutoReg_SP.getText().toString()),2);
+                writeS7.setWriteInt(Integer.parseInt(tv_AutoReg_manuel.getText().toString()),4);
+                writeS7.setWriteInt(Integer.parseInt(tv_AutoReg_mpv.getText().toString()),6);
+                break;
+            case R.id.bt_autoReg_v1:
+                writeS7.setWriteBool(0,2, bt_autoReg_v1.getText().toString()=="Ouvrir la valve 1" ? 0 : 1);
+                break;
+            case R.id.bt_autoReg_v2:
+                writeS7.setWriteBool(0,4, bt_autoReg_v2.getText().toString()=="Ouvrir la valve 2" ? 0 : 1);
+                break;
+            case R.id.bt_autoReg_v3:
+                writeS7.setWriteBool(0,8, bt_autoReg_v3.getText().toString()=="Ouvrir la valve 3" ? 0 : 1);
+                break;
+            case R.id.bt_autoReg_v4:
+                writeS7.setWriteBool(0,16, bt_autoReg_v4.getText().toString()=="Ouvrir la valve 4" ? 0 : 1);
+                break;
         }
     }
 
@@ -223,7 +251,7 @@ public class Automate_Regulation extends Activity {
         tv_AutoReg_txt_service.setText("Problème de connexion");
 
         readS7.Stop();
-        //writeS7.Stop();
+        writeS7.Stop();
 
         try{
             Thread.sleep(1000);
@@ -239,13 +267,14 @@ public class Automate_Regulation extends Activity {
     }
 
     public void lectureAutomate(int[]donnees){
+
         int d1=donnees[0];
         int d2=donnees[1];
         int d3=donnees[2];
         int d4=donnees[3];
         int d5=donnees[4];
 
-        Log.i("Automate_Comprime ","1 :" +String.valueOf(d1));
+        //Log.i("Automate_Comprime ","1 :" +String.valueOf(d1));
 
         String uri = "@android:drawable/presence_online";
         int imageResource = getResources().getIdentifier(uri, null, getPackageName());
@@ -270,11 +299,12 @@ public class Automate_Regulation extends Activity {
         img_AutoReg_v4.setImageDrawable(getResources().getDrawable(imageResource,this.getTheme()));
 
         bt_autoReg_v1.setText((0x0200 & d1) ==512 ? "Ouvrir la valve 1" : "Fermer la valve 1");
-        bt_autoReg_v2.setText((0x0400 & d1) ==512 ? "Ouvrir la valve 2" : "Fermer la valve 2");
-        bt_autoReg_v3.setText((0x0800 & d1) ==512 ? "Ouvrir la valve 3" : "Fermer la valve 3");
-        bt_autoReg_v4.setText((0x1000 & d1) ==512 ? "Ouvrir la valve 4" : "Fermer la valve 4");
+        bt_autoReg_v2.setText((0x0400 & d1) ==1024 ? "Ouvrir la valve 2" : "Fermer la valve 2");
+        bt_autoReg_v3.setText((0x0800 & d1) ==2048 ? "Ouvrir la valve 3" : "Fermer la valve 3");
+        bt_autoReg_v4.setText((0x1000 & d1) ==4096 ? "Ouvrir la valve 4" : "Fermer la valve 4");
 
         pb_AutoReg_nivLiq.setProgress(d2/10);
+        nivLiq=d2;
 
         if(d2/10>=100){
             vibb.Start();
@@ -282,5 +312,12 @@ public class Automate_Regulation extends Activity {
         else if (d2/10<100){
             vibb.stop();
         }
+
+        tv_AutoReg_SP.setText(String.valueOf(d3));
+
+        tv_AutoReg_manuel.setText(String.valueOf(d4));
+
+        tv_AutoReg_mpv.setText(String.valueOf(d5));
+
     }
 }

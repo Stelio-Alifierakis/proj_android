@@ -114,7 +114,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/tv_AutoReg_progress"
                         android:textSize="10sp"
-                        android:text="Niveau du liquide" />
+                        android:text="Niveau du liquide : " />
 
                     <ProgressBar
                         android:layout_width="match_parent"
@@ -265,76 +265,99 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/vert_caca_oie"
-                        android:padding="5sp">
+                        android:padding="5sp"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/tv_AutoReg_SetPoint"
-                            android:textSize="15sp"
-                            android:text="Set Point"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/tv_AutoReg_SetPoint"
+                                    android:textSize="15sp"
+                                    android:text="Set Point"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/tv_AutoReg_SP"
-                            android:textSize="15sp"
-                            android:text="0"
-                            android:padding="10sp"
-                            android:inputType="number"
-                            android:background="@color/creme"
-                            />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/tv_AutoReg_SP"
+                                    android:textSize="15sp"
+                                    android:text="0"
+                                    android:padding="10sp"
+                                    android:inputType="number"
+                                    android:background="@color/creme"
+                                    android:layout_marginRight="10sp"
+                                    />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/tv_AutoReg_Man"
-                            android:textSize="15sp"
-                            android:text="Manual"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/tv_AutoReg_Man"
+                                    android:textSize="15sp"
+                                    android:text="Manual"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/tv_AutoReg_manuel"
-                            android:textSize="15sp"
-                            android:text="0"
-                            android:padding="10sp"
-                            android:inputType="number"
-                            android:background="@color/creme"
-                            />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/tv_AutoReg_manuel"
+                                    android:textSize="15sp"
+                                    android:text="0"
+                                    android:padding="10sp"
+                                    android:inputType="number"
+                                    android:background="@color/creme"
+                                    android:layout_marginRight="10sp"
+                                    />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/tv_AutoReg_MotPilotV"
-                            android:textSize="15sp"
-                            android:text="Mot pilotage vanne"/>
+                            </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/tv_AutoReg_mpv"
-                            android:textSize="15sp"
-                            android:text="0"
-                            android:padding="10sp"
-                            android:inputType="number"
-                            android:background="@color/creme"
-                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/tv_AutoReg_MotPilotV"
+                                android:textSize="15sp"
+                                android:text="Mot pilotage \n vanne"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/tv_AutoReg_mpv"
+                                android:textSize="15sp"
+                                android:text="0"
+                                android:padding="10sp"
+                                android:inputType="number"
+                                android:background="@color/creme"
+                                />
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ecrire les valeurs"
+                                android:textSize="10sp"
+                                android:textAllCaps="false"
+                                android:id="@+id/bt_autoReg_valEcriture"
+                                android:onClick="onAutoRegClickManager"/>
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
+
+
 
                 </LinearLayout>
 
             </LinearLayout>
 
-
-
         </LinearLayout>
 
     </ScrollView>
-
-
-
-
-
 </LinearLayout>

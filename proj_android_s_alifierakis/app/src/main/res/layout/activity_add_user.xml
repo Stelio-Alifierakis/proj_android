@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_height="match_parent"
+android:layout_width="match_parent"
+android:orientation="vertical"
+android:gravity="center"
+    android:background="@color/vert_caca_oie"
+tools:context="be.heh.campus_technique.proj_android_s_alifierakis.AddUser">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_AddUser_titre"
+            android:textSize="30sp"
+            android:layout_marginBottom="30sp"
+            android:text="Ajout d'un utilisateur" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:orientation="vertical"
+        android:padding="10sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_AddUser_login"
+            android:textSize="15sp"
+            android:text="Pseudo de la personne :" />
+
+        <EditText
+            android:id="@+id/et_AddUser_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/creme"
+            android:hint="Login"
+            android:layout_marginBottom="10sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_AddUser_password"
+            android:textSize="15sp"
+            android:text="Mot de passe de la personne :" />
+
+        <EditText
+            android:id="@+id/et_AddUser_pwd"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:background="@color/creme"
+            android:layout_marginBottom="10sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_AddUser_droit"
+            android:textSize="15sp"
+            android:text="Droit de la personne :" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rb_AddUser_ro"
+                    android:text="Lecture seule"
+                    android:textSize="10sp"
+                    android:checked="true"
+                    android:onClick="onAddUserClickManager"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rb_AddUser_rw"
+                    android:text="Lecture/Ecriture"
+                    android:textSize="10sp"
+                    android:onClick="onAddUserClickManager"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rb_AddUser_fc"
+                    android:text="Full Contrôle"
+                    android:textSize="10sp"
+                    android:onClick="onAddUserClickManager"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="right">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enregistrer utilisateur"
+                android:textAllCaps="false"
+                android:id="@+id/bt_AddUser_add"
+                android:onClick="onAddUserClickManager"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Annuler"
+                android:textAllCaps="false"
+                android:id="@+id/bt_AddUser_annulation"
+                android:onClick="onAddUserClickManager"/>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

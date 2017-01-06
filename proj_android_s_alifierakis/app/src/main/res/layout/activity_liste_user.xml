@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_liste_user"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="be.heh.campus_technique.proj_android_s_alifierakis.listeUser">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Revenir aux connections"
+        android:textAllCaps="false"
+        android:id="@+id/bt_listeUser_comeBack"
+        android:layout_marginBottom="15sp"
+        android:onClick="onListeUserClickManager"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_listeUser_data"
+        android:textSize="25sp"
+        android:layout_below="@+id/bt_listeUser_comeBack"
+        android:text="Liste des utilisateurs"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_listeUser_data">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_listeUser_liste"/>
+
+    </ScrollView>
+
+
+
+</RelativeLayout>
