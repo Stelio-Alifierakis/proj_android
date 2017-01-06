@@ -6,10 +6,12 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -31,6 +33,8 @@ public class Connection extends Activity {
     private LinearLayout ll_connection_coAutomate1;
     private LinearLayout ll_connection_coAutomate2;
 
+    private TextView tv_connection_txt_pseudo;
+
     private EditText et_connection_ipAUtomate1;
     private EditText et_connection_rackAUtomate1;
     private EditText et_connection_slotAUtomate1;
@@ -38,12 +42,17 @@ public class Connection extends Activity {
     private EditText et_connection_rackAUtomate2;
     private EditText et_connection_slotAUtomate2;
 
-    //SharedPreferences pref_data;
+    private String login;
+    private String droit;
+
+    SharedPreferences pref_data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connection);
+
+        tv_connection_txt_pseudo=(TextView) findViewById(R.id.tv_connection_txt_pseudo);
 
         bt_connection_text_co1=(Button) findViewById(R.id.bt_connection_text_co1);
         bt_connection_text_lancerAutomate1=(Button) findViewById(R.id.bt_connection_text_lancerAutomate1);
@@ -116,6 +125,17 @@ public class Connection extends Activity {
             ex.printStackTrace();
         }
         //pref_data = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        pref_data = PreferenceManager.getDefaultSharedPreferences(getApplication());
+        login=pref_data.getString("login","NULL");
+        droit=pref_data.getString("droit","NULL");
+
+        Log.i("test",login + " " + droit);
+
+        tv_connection_txt_pseudo.setText(login);
+
+        bt_connection_text_gestUser.setVisibility(droit.compareTo("FC")==0? View.VISIBLE : View.GONE);
+
     }
 
     public void onConnexionClickManager(View v){
