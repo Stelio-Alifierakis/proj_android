@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_gest_user"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:gravity="center_vertical"
+    tools:context="be.heh.campus_technique.proj_android_s_alifierakis.GestUser">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_GestUser_login"
+        android:textSize="25sp"
+        android:text="Login"
+        android:layout_margin="10sp"/>
+
+    <EditText
+        android:id="@+id/et_GestUser_ancientMDP"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ancien mot de passe"
+        android:layout_below="@+id/tv_GestUser_login"
+        android:background="@color/creme"
+        android:layout_marginBottom="10sp" />
+
+    <EditText
+        android:id="@+id/et_GestUser_nouveauMDP"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nouveau mot de passe"
+        android:layout_below="@+id/et_GestUser_ancientMDP"
+        android:background="@color/creme"
+        android:layout_marginBottom="10sp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Revenir aux connections"
+        android:textAllCaps="false"
+        android:id="@+id/bt_GestUser_comeBack"
+        android:layout_marginBottom="15sp"
+        android:layout_below="@+id/et_GestUser_nouveauMDP"
+        android:layout_alignParentRight="true"
+        android:onClick="onGestUserClickManager"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Changer le mot de passe"
+        android:textAllCaps="false"
+        android:id="@+id/bt_GestUser_changerMDP"
+        android:layout_marginBottom="15sp"
+        android:layout_below="@+id/et_GestUser_nouveauMDP"
+        android:onClick="onGestUserClickManager"/>
+
+
+</RelativeLayout>

@@ -67,6 +67,33 @@ public class UserAccessBDD  {
         return db.delete(TABLE_USER,COL_LOGIN + " = " + login,null);
     }
 
+    public User getUser(String login){
+        Cursor c=db.query(TABLE_USER,new String[]{
+                COL_ID, COL_LOGIN, COL_PASSWORD, COL_DROIT
+        }, COL_LOGIN + " LIKE \"" + login + "\"", null, null, null, COL_LOGIN);
+
+        return cursorToUser(c);
+    }
+
+    public User cursorToUser(Cursor c){
+        if(c.getCount() == 0){
+            c.close();
+            return null;
+        }
+
+        c.moveToFirst();
+
+        User user1 = new User();
+        user1.setId(c.getInt(NUM_COL_ID));
+        user1.setLogin(c.getString(NUM_COL_LOGIN));
+        user1.setPassword(c.getString(NUM_COL_PASSWORD));
+        user1.setDroit(c.getString(NUM_COL_DROIT));
+
+        c.close();
+
+        return  user1;
+    }
+
 
     public ArrayList<User> getAllUsers(){
         Cursor c=db.query(TABLE_USER,new String[]{
@@ -91,6 +118,5 @@ public class UserAccessBDD  {
         c.close();
         return tabUser;
     }
-
 
 }

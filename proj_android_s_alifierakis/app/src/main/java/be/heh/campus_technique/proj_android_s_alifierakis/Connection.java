@@ -25,6 +25,8 @@ public class Connection extends Activity {
     private Button bt_connection_text_lancerAutomate1;
     private Button bt_connection_text_co2;
     private Button bt_connection_text_lancerAutomate2;
+    private Button bt_connection_text_gestPwd;
+    private Button bt_connection_text_gestUser;
 
     private LinearLayout ll_connection_coAutomate1;
     private LinearLayout ll_connection_coAutomate2;
@@ -47,6 +49,8 @@ public class Connection extends Activity {
         bt_connection_text_lancerAutomate1=(Button) findViewById(R.id.bt_connection_text_lancerAutomate1);
         bt_connection_text_co2=(Button) findViewById(R.id.bt_connection_text_co2);
         bt_connection_text_lancerAutomate2=(Button) findViewById(R.id.bt_connection_text_lancerAutomate2);
+        bt_connection_text_gestPwd=(Button) findViewById(R.id.bt_connection_text_gestPwd);
+        bt_connection_text_gestUser=(Button) findViewById(R.id.bt_connection_text_gestUser);
 
         ll_connection_coAutomate1=(LinearLayout) findViewById(R.id.ll_connection_coAutomate1);
         ll_connection_coAutomate2=(LinearLayout) findViewById(R.id.ll_connection_coAutomate2);
@@ -185,6 +189,9 @@ public class Connection extends Activity {
                 finish();
 
                 break;
+            case R.id.bt_connection_text_gestPwd :
+                break;
+
         }
     }
 }

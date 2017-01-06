@@ -43,7 +43,7 @@ public class listeUser extends Activity {
         tv_listeUser_liste.setAdapter(adapter);
     }
 
-    public void onAddUserClickManager(View v){
+    public void onListeUserClickManager(View v){
 
         switch(v.getId()){
 

@@ -8,6 +8,37 @@
     android:gravity="center_horizontal"
     tools:context="be.heh.campus_technique.proj_android_s_alifierakis.Connection" >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_connection_txt_pseudo"
+            android:textSize="15sp"
+            android:text="Login"
+            android:layout_margin="10sp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onConnexionClickManager"
+            android:id="@+id/bt_connection_text_gestUser"
+            android:textSize="10sp"
+            android:text="Gestion des utilisateurs" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onConnexionClickManager"
+            android:id="@+id/bt_connection_text_gestPwd"
+            android:textSize="10sp"
+            android:text="Changer son mot de passe" />
+
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

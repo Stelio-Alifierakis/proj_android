@@ -27,17 +27,11 @@
         android:layout_below="@+id/bt_listeUser_comeBack"
         android:text="Liste des utilisateurs"/>
 
-    <ScrollView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_listeUser_data">
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_listeUser_liste"/>
-
-    </ScrollView>
+        android:layout_below="@+id/tv_listeUser_data"
+        android:id="@+id/tv_listeUser_liste"/>
 
 
 
