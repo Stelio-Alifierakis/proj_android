@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +29,7 @@ public class Connection extends Activity {
     private Button bt_connection_text_lancerAutomate2;
     private Button bt_connection_text_gestPwd;
     private Button bt_connection_text_gestUser;
+    private Button bt_connection_text_comeBack;
 
     private LinearLayout ll_connection_coAutomate1;
     private LinearLayout ll_connection_coAutomate2;
@@ -60,6 +61,7 @@ public class Connection extends Activity {
         bt_connection_text_lancerAutomate2=(Button) findViewById(R.id.bt_connection_text_lancerAutomate2);
         bt_connection_text_gestPwd=(Button) findViewById(R.id.bt_connection_text_gestPwd);
         bt_connection_text_gestUser=(Button) findViewById(R.id.bt_connection_text_gestUser);
+        bt_connection_text_comeBack=(Button) findViewById(R.id.bt_connection_text_comeBack);
 
         ll_connection_coAutomate1=(LinearLayout) findViewById(R.id.ll_connection_coAutomate1);
         ll_connection_coAutomate2=(LinearLayout) findViewById(R.id.ll_connection_coAutomate2);
@@ -85,7 +87,7 @@ public class Connection extends Activity {
             ins.close();
 
             String[] confs=out.toString().split("#");
-            Toast.makeText(this,confs[0]+ " " + confs[1] + " " + confs[2],Toast.LENGTH_LONG).show();
+            //Toast.makeText(this,confs[0]+ " " + confs[1] + " " + confs[2],Toast.LENGTH_LONG).show();
             et_connection_ipAUtomate1.setText(confs[0]);
             et_connection_rackAUtomate1.setText(confs[1]);
             et_connection_slotAUtomate1.setText(confs[2]);
@@ -142,12 +144,6 @@ public class Connection extends Activity {
 
         switch(v.getId()){
             case R.id.bt_connection_text_co1 :
-
-                /*if(!pref_data.getAll().isEmpty()){
-                    et_connection_ipAUtomate1.setText(pref_data.getString("ipAutom1","NULL"));
-                    et_connection_rackAUtomate1.setText(pref_data.getString("rackAutom1","NULL"));
-                    et_connection_slotAUtomate1.setText(pref_data.getString("slotAutom1","NULL"));
-                }*/
 
                 ll_connection_coAutomate1.setVisibility(View.VISIBLE);
                 ll_connection_coAutomate2.setVisibility(View.GONE);
@@ -210,6 +206,19 @@ public class Connection extends Activity {
 
                 break;
             case R.id.bt_connection_text_gestPwd :
+                Intent intent4 = new Intent(this,GestPwd.class);
+                startActivity(intent4);
+                finish();
+                break;
+            case R.id.bt_connection_text_gestUser :
+                Intent intent3 = new Intent(this,listeUser.class);
+                startActivity(intent3);
+                finish();
+                break;
+            case R.id.bt_connection_text_comeBack :
+                Intent intent5 = new Intent(this,MainActivity.class);
+                startActivity(intent5);
+                finish();
                 break;
 
         }

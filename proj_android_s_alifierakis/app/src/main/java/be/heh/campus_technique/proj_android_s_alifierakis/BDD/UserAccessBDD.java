@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -59,7 +60,7 @@ public class UserAccessBDD  {
         content.put(COL_LOGIN,u.getLogin());
         content.put(COL_PASSWORD,u.getPassword());
         content.put(COL_DROIT,u.getDroit());
-
+        Log.i("testBd",String.valueOf(i) + " " + u.getLogin() + " " + u.getPassword());
         return db.update(TABLE_USER,content,COL_ID + " = " + i , null);
     }
 

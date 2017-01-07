@@ -20,6 +20,7 @@ public class listeUser extends Activity {
     TextView tv_listeUser_data;
     ListView tv_listeUser_liste;
     Button bt_listeUser_comeBack;
+    Button bt_listeUser_addUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class listeUser extends Activity {
         tv_listeUser_liste=(ListView)findViewById(R.id.tv_listeUser_liste);
 
         bt_listeUser_comeBack=(Button)findViewById(R.id.bt_listeUser_comeBack);
+        bt_listeUser_addUser=(Button)findViewById(R.id.bt_listeUser_addUser);
 
         UserAccessBDD userBD =new UserAccessBDD(this);
 
@@ -52,7 +54,11 @@ public class listeUser extends Activity {
                 startActivity(intent2);
                 finish();
                 break;
-
+            case R.id.bt_listeUser_addUser :
+                Intent intent = new Intent(this,AddUser.class);
+                startActivity(intent);
+                finish();
+                break;
         }
 
     }

@@ -17,6 +17,16 @@
         android:textAllCaps="false"
         android:id="@+id/bt_listeUser_comeBack"
         android:layout_marginBottom="15sp"
+        android:layout_toLeftOf="@+id/bt_listeUser_addUser"
+        android:onClick="onListeUserClickManager"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ajouter utilisateur"
+        android:textAllCaps="false"
+        android:id="@+id/bt_listeUser_addUser"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="15sp"
         android:onClick="onListeUserClickManager"/>
 
     <TextView

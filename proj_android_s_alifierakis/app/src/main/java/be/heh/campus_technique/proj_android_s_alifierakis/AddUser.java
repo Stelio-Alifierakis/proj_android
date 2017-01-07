@@ -59,7 +59,12 @@ public class AddUser extends Activity {
         switch(v.getId()){
             case R.id.bt_AddUser_add :
                 String droit= (rb_AddUser_ro.isChecked()? "RO": (rb_AddUser_rw.isChecked()? "RW" : (rb_AddUser_fc.isChecked()? "FC" : "RO") ) );
-                String hashCdc="";
+
+                Hash h=new Hash();
+
+                String hashCdc=h.hashage(et_AddUser_pwd.getText().toString(),"SHA-1");
+
+                /*String hashCdc="";
                 try{
                     MessageDigest md = MessageDigest.getInstance("SHA-1");
                     md.update(et_AddUser_pwd.getText().toString().getBytes());
@@ -78,7 +83,7 @@ public class AddUser extends Activity {
                 }
                 catch (Exception e){
                     e.printStackTrace();
-                }
+                }*/
 
                 try{
                     User user1=new User(et_AddUser_login.getText().toString(),hashCdc,droit);
@@ -97,7 +102,7 @@ public class AddUser extends Activity {
 
                 break;
             case R.id.bt_AddUser_annulation :
-                Intent intent2 = new Intent(this,Connection.class);
+                Intent intent2 = new Intent(this,listeUser.class);
                 startActivity(intent2);
                 finish();
                 break;

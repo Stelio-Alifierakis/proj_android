@@ -46,7 +46,11 @@ public class MainActivity extends Activity {
 
                 if(et_main_login.getText().length()>0 && et_main_pwd.getText().length()>0){
 
-                    String hashCdc="";
+                    Hash h=new Hash();
+
+                    String hashCdc=h.hashage(et_main_pwd.getText().toString(),"SHA-1");
+
+                    /*String hashCdc="";
                     try{
                         MessageDigest md = MessageDigest.getInstance("SHA-1");
                         md.update(et_main_pwd.getText().toString().getBytes());
@@ -65,7 +69,7 @@ public class MainActivity extends Activity {
                     }
                     catch (Exception e){
                         e.printStackTrace();
-                    }
+                    }*/
                     // User user1 =
                     try{
 
