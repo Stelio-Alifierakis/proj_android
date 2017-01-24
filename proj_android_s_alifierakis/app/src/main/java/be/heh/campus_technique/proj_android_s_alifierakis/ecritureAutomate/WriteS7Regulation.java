@@ -75,9 +75,7 @@ public class WriteS7Regulation {
             catch(Exception e){
                 e.printStackTrace();
             }
-
         }
-
     }
 
     public  void setWriteBool(int bytes,int b, int v){

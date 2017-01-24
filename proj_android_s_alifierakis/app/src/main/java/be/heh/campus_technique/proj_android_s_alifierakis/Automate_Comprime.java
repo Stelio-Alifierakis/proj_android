@@ -12,9 +12,11 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,7 @@ public class Automate_Comprime extends Activity {
     Button bt_autoCond_selecteur;
     Button bt_autoCond_resetCompteur;
     Button bt_autoCond_retourChxAuto;
+    Button bt_autoCond_envoiRWDB;
 
     RadioButton rb_AutoCompr_5compr;
     RadioButton rb_AutoCompr_10compr;
@@ -52,7 +55,19 @@ public class Automate_Comprime extends Activity {
     TextView tv_AutoCompr_txtRack;
     TextView tv_AutoCompr_txtSlot;
 
+    EditText et_AutoCompr_numDB;
+    EditText et_AutoCompr_numDBCompr;
+    EditText et_AutoCompr_numDB5Compr;
+    EditText et_AutoCompr_numDB10Compr;
+    EditText et_AutoCompr_numDB15Compr;
+    EditText et_AutoCompr_numDBArriveeFlacon;
+    EditText et_AutoCompr_numDBArriveeFlaconbit;
+    EditText et_AutoCompr_numDBnbreComprAffich;
+    EditText et_AutoCompr_numDBResetCompt;
+
     LinearLayout ll_AutoCompr_service;
+
+    RelativeLayout rl_ecritBits;
 
     private NetworkInfo network;
     private ConnectivityManager connexStatus;
@@ -69,12 +84,16 @@ public class Automate_Comprime extends Activity {
     private String login;
     private String droit;
 
+    private int[] tabBit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_automate__comprime);
 
         ll_AutoCompr_service = (LinearLayout) findViewById(R.id.ll_AutoCompr_service);
+
+        rl_ecritBits = (RelativeLayout) findViewById(R.id.rl_ecritBits);
 
         img_AutoCompr_arriveeFlacon = (ImageView) findViewById(R.id.img_AutoCompr_arriveeFlacon);
         img_AutoCompr_moteur = (ImageView) findViewById(R.id.img_AutoCompr_moteur);
@@ -86,6 +105,17 @@ public class Automate_Comprime extends Activity {
         bt_autoCond_changeNbCompr = (Button) findViewById(R.id.bt_autoCond_changeNbCompr);
         bt_autoCond_resetCompteur = (Button) findViewById(R.id.bt_autoCond_resetCompteur);
         bt_autoCond_retourChxAuto = (Button) findViewById(R.id.bt_autoCond_retourChxAuto);
+        bt_autoCond_envoiRWDB = (Button) findViewById(R.id.bt_autoCond_envoiRWDB);
+
+        et_AutoCompr_numDB=(EditText) findViewById(R.id.et_AutoCompr_numDB);
+        et_AutoCompr_numDBCompr=(EditText) findViewById(R.id.et_AutoCompr_numDBCompr);
+        et_AutoCompr_numDB5Compr=(EditText) findViewById(R.id.et_AutoCompr_numDB5Compr);
+        et_AutoCompr_numDB10Compr=(EditText) findViewById(R.id.et_AutoCompr_numDB10Compr);
+        et_AutoCompr_numDB15Compr=(EditText) findViewById(R.id.et_AutoCompr_numDB15Compr);
+        et_AutoCompr_numDBArriveeFlacon=(EditText) findViewById(R.id.et_AutoCompr_numDBArriveeFlacon);
+        et_AutoCompr_numDBArriveeFlaconbit=(EditText) findViewById(R.id.et_AutoCompr_numDBArriveeFlaconbit);
+        et_AutoCompr_numDBnbreComprAffich=(EditText) findViewById(R.id.et_AutoCompr_numDBnbreComprAffich);
+        et_AutoCompr_numDBResetCompt=(EditText) findViewById(R.id.et_AutoCompr_numDBResetCompt);
 
         rb_AutoCompr_5compr = (RadioButton) findViewById(R.id.rb_AutoCompr_5compr);
         rb_AutoCompr_10compr = (RadioButton) findViewById(R.id.rb_AutoCompr_10compr);
@@ -137,21 +167,56 @@ public class Automate_Comprime extends Activity {
         tv_AutoCompr_txtRack.setText(tv_AutoCompr_txtRack.getText() + " " + rack);
         tv_AutoCompr_txtSlot.setText(tv_AutoCompr_txtSlot.getText() + " " + slot);
 
-        if(droit!="RO"){
+        if(droit=="RO"){
              bt_autoCond_arriveeFlacon.setVisibility(View.GONE);
-             bt_autoCond_ro.setVisibility(View.GONE);
              bt_autoCond_changeNbCompr.setVisibility(View.GONE);
              bt_autoCond_selecteur.setVisibility(View.GONE);
              bt_autoCond_resetCompteur.setVisibility(View.GONE);
-             bt_autoCond_retourChxAuto.setVisibility(View.GONE);
+            bt_autoCond_envoiRWDB.setVisibility(View.GONE);
         }
-        else{
+        else if(droit=="FC"){
             bt_autoCond_arriveeFlacon.setVisibility(View.VISIBLE);
-            bt_autoCond_ro.setVisibility(View.VISIBLE);
             bt_autoCond_changeNbCompr.setVisibility(View.VISIBLE);
             bt_autoCond_selecteur.setVisibility(View.VISIBLE);
             bt_autoCond_resetCompteur.setVisibility(View.VISIBLE);
-            bt_autoCond_retourChxAuto.setVisibility(View.VISIBLE);
+            bt_autoCond_envoiRWDB.setVisibility(View.VISIBLE);
+        }
+        else{
+            bt_autoCond_arriveeFlacon.setVisibility(View.VISIBLE);
+            bt_autoCond_changeNbCompr.setVisibility(View.VISIBLE);
+            bt_autoCond_selecteur.setVisibility(View.VISIBLE);
+            bt_autoCond_resetCompteur.setVisibility(View.VISIBLE);
+            bt_autoCond_envoiRWDB.setVisibility(View.GONE);
+        }
+
+        try{
+            FileInputStream ins=openFileInput("RWautom1.txt");
+            BufferedReader reader=new BufferedReader(new InputStreamReader(ins));
+            StringBuilder out=new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null){
+                out.append(line);
+            }
+
+            reader.close();
+            ins.close();
+
+            String[] confs=out.toString().split("#");
+
+            int i=0;
+            for(String a : confs){
+                tabBit[i]=Integer.parseInt(a);
+                Log.i("Valeur " + String.valueOf(i),String.valueOf(tabBit[i]));
+                i++;
+            }
+
+        }
+        catch (FileNotFoundException ex){
+            ex.printStackTrace();
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
         }
     }
 
@@ -176,7 +241,27 @@ public class Automate_Comprime extends Activity {
                 Intent intent = new Intent(this,Connection.class);
                 startActivity(intent);
                 break;
+            case R.id.bt_autoCond_rw:
+                if(bt_autoCond_ro.getText().equals("Se déconnecter")){
+                    readS7.Stop();
+                    if(droit!="RO"){
+                        writeS7.Stop();
+                    }
+                    try{
+                        Thread.sleep(1000);
+                    }
+                    catch(Exception e){
+                        Log.i("Automate_Comprime","test");
+                        e.printStackTrace();
+                    }
+                }
+
+                rl_ecritBits.setVisibility(View.VISIBLE);
+                break;
             case R.id.bt_autoCond_ro:
+
+                rl_ecritBits.setVisibility(View.GONE);
+
                 Log.i("test co",ipAdr + " "+ rack + " "+ slot);
                 if(network !=null && network.isConnectedOrConnecting()){
                     if(bt_autoCond_ro.getText().equals("Lire automate")){

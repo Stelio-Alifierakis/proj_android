@@ -217,10 +217,10 @@ public class Connection extends Activity {
                 break;
             case R.id.bt_connection_text_comeBack :
                 Intent intent5 = new Intent(this,MainActivity.class);
+                intent5.putExtra("login",login);
                 startActivity(intent5);
                 finish();
                 break;
-
         }
     }
 }
