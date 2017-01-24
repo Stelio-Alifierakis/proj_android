@@ -9,7 +9,7 @@
     tools:context="be.heh.campus_technique.proj_android_s_alifierakis.Automate_Comprime" >
 
 
-<Button
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Revenir à l'accueil"
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/ll_AutoReg_auto"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"

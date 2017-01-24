@@ -38,11 +38,36 @@ public class MainActivity extends Activity {
         bt_main_text_co=(Button)findViewById(R.id.bt_main_text_co);
 
         pref_data = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
     }
 
     public void onMainClickManager(View v){
         switch(v.getId()){
             case R.id.bt_main_text_co :
+
+                try{
+                    UserAccessBDD userBD =new UserAccessBDD(this);
+
+                    userBD.openForRead();
+
+                    int nbAdmin=userBD.countAdmin("FC");
+                    Log.i("------->Essai ", String.valueOf(nbAdmin));
+
+                    if(nbAdmin==0){
+                        Hash h=new Hash();
+                        String hashCdc=h.hashage("android3","SHA-1");
+
+                        User user1=new User("android",hashCdc,"FC");
+
+                        userBD.openForWrite();
+                        userBD.insertUser(user1);
+                    }
+
+                    userBD.close();
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
 
                 if(et_main_login.getText().length()>0 && et_main_pwd.getText().length()>0){
 
@@ -80,6 +105,7 @@ public class MainActivity extends Activity {
                         User user1 =userBD.getUser(et_main_login.getText().toString());
                         userBD.close();
 
+                        Log.i("user",user1.getLogin());
                         Log.i("mdp",String.valueOf(user1.getPassword().compareTo(hashCdc)));
 
                         if(user1.getPassword().compareTo(hashCdc)==0){

@@ -76,6 +76,18 @@ public class UserAccessBDD  {
         return cursorToUser(c);
     }
 
+    public int countAdmin(String right){
+        /*Cursor c=db.query(TABLE_USER,new String[]{
+                COL_ID, COL_LOGIN, COL_PASSWORD, COL_DROIT
+        }, COL_DROIT + " LIKE \"" + right + "\"", null, null, null, COL_LOGIN);*/
+
+        Cursor c=db.rawQuery("select count(*) from " + TABLE_USER + " where " + COL_DROIT + "='" + right + "'",null);
+        c.moveToFirst();
+        int count=c.getInt(0);
+        c.close();
+        return count;
+    }
+
     public User cursorToUser(Cursor c){
         if(c.getCount() == 0){
             c.close();

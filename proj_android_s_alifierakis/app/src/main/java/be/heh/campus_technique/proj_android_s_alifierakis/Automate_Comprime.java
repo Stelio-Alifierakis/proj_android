@@ -64,7 +64,10 @@ public class Automate_Comprime extends Activity {
     private String rack;
     private String slot;
 
-    //SharedPreferences pref_data;
+    SharedPreferences pref_data;
+
+    private String login;
+    private String droit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,14 +129,30 @@ public class Automate_Comprime extends Activity {
             ex.printStackTrace();
         }
 
-        /*pref_data = PreferenceManager.getDefaultSharedPreferences(getApplication());
-        ipAdr=pref_data.getString("ipAutom1","NULL");
-        rack=pref_data.getString("rackAutom1","NULL");
-        slot=pref_data.getString("slotAutom1","NULL");*/
+        pref_data = PreferenceManager.getDefaultSharedPreferences(getApplication());
+        login=pref_data.getString("login","NULL");
+        droit=pref_data.getString("droit","NULL");
 
         tv_AutoCompr_txtIp.setText(tv_AutoCompr_txtIp.getText() + " " + ipAdr);
         tv_AutoCompr_txtRack.setText(tv_AutoCompr_txtRack.getText() + " " + rack);
         tv_AutoCompr_txtSlot.setText(tv_AutoCompr_txtSlot.getText() + " " + slot);
+
+        if(droit!="RO"){
+             bt_autoCond_arriveeFlacon.setVisibility(View.GONE);
+             bt_autoCond_ro.setVisibility(View.GONE);
+             bt_autoCond_changeNbCompr.setVisibility(View.GONE);
+             bt_autoCond_selecteur.setVisibility(View.GONE);
+             bt_autoCond_resetCompteur.setVisibility(View.GONE);
+             bt_autoCond_retourChxAuto.setVisibility(View.GONE);
+        }
+        else{
+            bt_autoCond_arriveeFlacon.setVisibility(View.VISIBLE);
+            bt_autoCond_ro.setVisibility(View.VISIBLE);
+            bt_autoCond_changeNbCompr.setVisibility(View.VISIBLE);
+            bt_autoCond_selecteur.setVisibility(View.VISIBLE);
+            bt_autoCond_resetCompteur.setVisibility(View.VISIBLE);
+            bt_autoCond_retourChxAuto.setVisibility(View.VISIBLE);
+        }
     }
 
     public void onAutoCondClickManager(View v){
@@ -142,7 +161,9 @@ public class Automate_Comprime extends Activity {
 
                 if(bt_autoCond_ro.getText().equals("Se déconnecter")){
                     readS7.Stop();
-                    writeS7.Stop();
+                    if(droit!="RO"){
+                        writeS7.Stop();
+                    }
                     try{
                         Thread.sleep(1000);
                     }
@@ -173,14 +194,20 @@ public class Automate_Comprime extends Activity {
                             e.printStackTrace();
                         }
 
-                        writeS7=new WriteS7Conditionnement();
-                        //writeS7.Start("192.168.10.220","0","2");
-                        //writeS7.Start("192.168.0.220","0","2");
-                        writeS7.Start(ipAdr,rack,slot);
+                        if(droit!="RO"){
+                            writeS7=new WriteS7Conditionnement();
+                            //writeS7.Start("192.168.10.220","0","2");
+                            //writeS7.Start("192.168.0.220","0","2");
+                            writeS7.Start(ipAdr,rack,slot);
+                        }
+
                     }
                     else{
                         readS7.Stop();
-                        writeS7.Stop();
+                        if(droit!="RO"){
+                            writeS7.Stop();
+                        }
+
                         try{
                             Thread.sleep(1000);
                         }
@@ -208,33 +235,45 @@ public class Automate_Comprime extends Activity {
                 }
                 break;
             case R.id.rb_AutoCompr_5compr:
-
-                writeS7.setWriteBool(0,2, rb_AutoCompr_5compr.isChecked() ? 1 : 0);
-                writeS7.setWriteBool(0,4, rb_AutoCompr_10compr.isChecked() ? 1 : 0);
-                writeS7.setWriteBool(0,8, rb_AutoCompr_15compr.isChecked() ? 1 : 0);
+                if(droit!="RO"){
+                    writeS7.setWriteBool(0,2, rb_AutoCompr_5compr.isChecked() ? 1 : 0);
+                    writeS7.setWriteBool(0,4, rb_AutoCompr_10compr.isChecked() ? 1 : 0);
+                    writeS7.setWriteBool(0,8, rb_AutoCompr_15compr.isChecked() ? 1 : 0);
+                }
                 break;
             case R.id.rb_AutoCompr_10compr:
-                writeS7.setWriteBool(0,2, rb_AutoCompr_5compr.isChecked() ? 1 : 0);
-                writeS7.setWriteBool(0,4, rb_AutoCompr_10compr.isChecked() ? 1 : 0);
-                writeS7.setWriteBool(0,8, rb_AutoCompr_15compr.isChecked() ? 1 : 0);
+                if(droit!="RO"){
+                    writeS7.setWriteBool(0,2, rb_AutoCompr_5compr.isChecked() ? 1 : 0);
+                    writeS7.setWriteBool(0,4, rb_AutoCompr_10compr.isChecked() ? 1 : 0);
+                    writeS7.setWriteBool(0,8, rb_AutoCompr_15compr.isChecked() ? 1 : 0);
+                }
                 break;
             case R.id.rb_AutoCompr_15compr:
-                writeS7.setWriteBool(0,2, rb_AutoCompr_5compr.isChecked() ? 1 : 0);
-                writeS7.setWriteBool(0,4, rb_AutoCompr_10compr.isChecked() ? 1 : 0);
-                writeS7.setWriteBool(0,8, rb_AutoCompr_15compr.isChecked() ? 1 : 0);
+                if(droit!="RO"){
+                    writeS7.setWriteBool(0,2, rb_AutoCompr_5compr.isChecked() ? 1 : 0);
+                    writeS7.setWriteBool(0,4, rb_AutoCompr_10compr.isChecked() ? 1 : 0);
+                    writeS7.setWriteBool(0,8, rb_AutoCompr_15compr.isChecked() ? 1 : 0);
+                }
                 break;
             case R.id.bt_autoCond_selecteur:
-                writeS7.setWriteBool(0,1, bt_autoCond_selecteur.getText().toString()=="Activer sélecteur" ? 1 : 0);
+                if(droit!="RO"){
+                    writeS7.setWriteBool(0,1, bt_autoCond_selecteur.getText().toString()=="Activer sélecteur" ? 1 : 0);
+                }
                 break;
             case R.id.bt_autoCond_arriveeFlacon:
-                writeS7.setWriteBool(1,8, bt_autoCond_arriveeFlacon.getText()=="Activer arrivée des flacons" ? 1 : 0);
+                if(droit!="RO"){
+                    writeS7.setWriteBool(1,8, bt_autoCond_arriveeFlacon.getText()=="Activer arrivée des flacons" ? 1 : 0);
+                }
                 break;
             case R.id.bt_autoCond_changeNbCompr:
-                writeS7.setWriteByte(3,Integer.parseInt(tv_AutoCompr_txt_nbreComprAffich.getText().toString()));
+                if(droit!="RO"){
+                    writeS7.setWriteByte(3,Integer.parseInt(tv_AutoCompr_txt_nbreComprAffich.getText().toString()));
+                }
                 break;
             case R.id.bt_autoCond_resetCompteur:
-
-                writeS7.setWriteInt(0);
+                if(droit!="RO"){
+                    writeS7.setWriteInt(0);
+                }
                 break;
         }
     }
@@ -247,7 +286,9 @@ public class Automate_Comprime extends Activity {
         tv_AutoCompr_txt_service.setText("Problème de connexion");
 
         readS7.Stop();
-        writeS7.Stop();
+        if(droit!="RO"){
+            writeS7.Stop();
+        }
 
         try{
             Thread.sleep(1000);

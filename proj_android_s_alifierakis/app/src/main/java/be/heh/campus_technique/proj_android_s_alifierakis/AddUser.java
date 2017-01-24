@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.security.MessageDigest;
 
@@ -86,19 +87,27 @@ public class AddUser extends Activity {
                 }*/
 
                 try{
-                    User user1=new User(et_AddUser_login.getText().toString(),hashCdc,droit);
-                    UserAccessBDD userBD=new UserAccessBDD(this);
-                    userBD.openForWrite();
-                    userBD.insertUser(user1);
-                    userBD.close();
+                    if(et_AddUser_pwd.getText().length()>=4){
+                        User user1=new User(et_AddUser_login.getText().toString(),hashCdc,droit);
+                        UserAccessBDD userBD=new UserAccessBDD(this);
+                        userBD.openForWrite();
+                        userBD.insertUser(user1);
+                        userBD.close();
+
+                        Intent intent = new Intent(this,listeUser.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else{
+                        Toast.makeText(this,"Le mot de passe n'est pas assez long",Toast.LENGTH_LONG).show();
+                    }
+
                 }
                 catch (Exception ex){
                     ex.printStackTrace();
                 }
 
-                Intent intent = new Intent(this,listeUser.class);
-                startActivity(intent);
-                finish();
+
 
                 break;
             case R.id.bt_AddUser_annulation :

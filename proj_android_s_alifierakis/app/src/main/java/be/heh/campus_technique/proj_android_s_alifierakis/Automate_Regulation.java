@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -47,6 +49,7 @@ public class Automate_Regulation extends Activity {
     TextView tv_AutoReg_manuel;
     TextView tv_AutoReg_mpv;
     TextView tv_AutoReg_txt_service;
+    TextView tv_AutoReg_progress;
 
     ImageView img_AutoReg_v2;
     ImageView img_AutoReg_v3;
@@ -68,9 +71,14 @@ public class Automate_Regulation extends Activity {
 
     private Vibrator vib;
 
-    private  Vibration vibb;
+    private Vibration vibb;
 
     private int nivLiq;
+
+    private String login;
+    private String droit;
+
+    SharedPreferences pref_data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +107,7 @@ public class Automate_Regulation extends Activity {
         tv_AutoReg_manuel = (TextView) findViewById(R.id.tv_AutoReg_manuel);
         tv_AutoReg_mpv = (TextView) findViewById(R.id.tv_AutoReg_mpv);
         tv_AutoReg_txt_service = (TextView) findViewById(R.id.tv_AutoReg_txt_service);
+        tv_AutoReg_progress = (TextView) findViewById(R.id.tv_AutoReg_progress);
 
         img_AutoReg_v2 = (ImageView) findViewById(R.id.img_AutoReg_v2);
         img_AutoReg_v3 = (ImageView) findViewById(R.id.img_AutoReg_v3);
@@ -143,6 +152,12 @@ public class Automate_Regulation extends Activity {
         tv_AutoReg_txtIp.setText(tv_AutoReg_txtIp.getText() + " " + ipAdr);
         tv_AutoReg_txtRack.setText(tv_AutoReg_txtRack.getText() + " " + rack);
         tv_AutoReg_txtSlot.setText(tv_AutoReg_txtSlot.getText() + " " + slot);
+
+        pref_data = PreferenceManager.getDefaultSharedPreferences(getApplication());
+        login=pref_data.getString("login","NULL");
+        droit=pref_data.getString("droit","NULL");
+
+        Log.i("-------------> test","test"+ droit);
     }
 
     public void onAutoRegClickManager(View v){
@@ -172,6 +187,22 @@ public class Automate_Regulation extends Activity {
                     if(bt_autoReg_ro.getText().equals("Lire automate")){
 
                         ll_AutoReg_auto.setVisibility(View.VISIBLE);
+
+                        if(droit.equals("RO")){
+                            bt_autoReg_v1.setVisibility(View.GONE);
+                            bt_autoReg_v2.setVisibility(View.GONE);
+                            bt_autoReg_v3.setVisibility(View.GONE);
+                            bt_autoReg_v4.setVisibility(View.GONE);
+                            bt_autoReg_valEcriture.setVisibility(View.GONE);
+                        }
+                        else{
+                            bt_autoReg_v1.setVisibility(View.VISIBLE);
+                            bt_autoReg_v2.setVisibility(View.VISIBLE);
+                            bt_autoReg_v3.setVisibility(View.VISIBLE);
+                            bt_autoReg_v4.setVisibility(View.VISIBLE);
+                            bt_autoReg_valEcriture.setVisibility(View.VISIBLE);
+                        }
+
                         Toast.makeText(this,network.getTypeName(),Toast.LENGTH_LONG).show();
                         bt_autoReg_ro.setText("Se déconnecter");
 
@@ -302,6 +333,14 @@ public class Automate_Regulation extends Activity {
         bt_autoReg_v2.setText((0x0400 & d1) ==1024 ? "Ouvrir la valve 2" : "Fermer la valve 2");
         bt_autoReg_v3.setText((0x0800 & d1) ==2048 ? "Ouvrir la valve 3" : "Fermer la valve 3");
         bt_autoReg_v4.setText((0x1000 & d1) ==4096 ? "Ouvrir la valve 4" : "Fermer la valve 4");
+
+        double litreCuve= (double)d2/1000*30;
+
+        //tv_AutoReg_progress.setText("Niveau du liquide : " + String.valueOf(((d2/10)/100)*30) + "L");
+
+        tv_AutoReg_progress.setText("Niveau du liquide : " + String.valueOf(litreCuve) + "L");
+
+        Log.i("verif math", String.valueOf(d2)+ " et " + String.valueOf(litreCuve));
 
         pb_AutoReg_nivLiq.setProgress(d2/10);
         nivLiq=d2;
