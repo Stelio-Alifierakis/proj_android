@@ -68,6 +68,7 @@ public class Automate_Comprime extends Activity {
     EditText et_AutoCompr_numDBnbreComprAffich;
     EditText et_AutoCompr_numDBResetCompt;
     EditText et_AutoCompr_numDBnbreComprAffichbit;
+    EditText et_AutoCompr_numComprVraiByte;
 
     LinearLayout ll_AutoCompr_service;
 
@@ -122,6 +123,7 @@ public class Automate_Comprime extends Activity {
         et_AutoCompr_numDBnbreComprAffich=(EditText) findViewById(R.id.et_AutoCompr_numDBnbreComprAffich);
         et_AutoCompr_numDBResetCompt=(EditText) findViewById(R.id.et_AutoCompr_numDBResetCompt);
         et_AutoCompr_numDBnbreComprAffichbit=(EditText) findViewById(R.id.et_AutoCompr_numDBnbreComprAffichbit);
+        et_AutoCompr_numComprVraiByte=(EditText) findViewById(R.id.et_AutoCompr_numComprVraiByte);
 
         rb_AutoCompr_5compr = (RadioButton) findViewById(R.id.rb_AutoCompr_5compr);
         rb_AutoCompr_10compr = (RadioButton) findViewById(R.id.rb_AutoCompr_10compr);
@@ -216,7 +218,8 @@ public class Automate_Comprime extends Activity {
         et_AutoCompr_numDBArriveeFlaconbit.setText(String.valueOf(tabBit.get(6)));
         et_AutoCompr_numDBnbreComprAffich.setText(String.valueOf(tabBit.get(7)));
         et_AutoCompr_numDBnbreComprAffichbit.setText(String.valueOf(tabBit.get(8)));
-        et_AutoCompr_numDBResetCompt.setText(String.valueOf(tabBit.get(9)));
+        et_AutoCompr_numComprVraiByte.setText(String.valueOf(tabBit.get(9)));
+        et_AutoCompr_numDBResetCompt.setText(String.valueOf(tabBit.get(10)));
     }
 
     public void onAutoCondClickManager(View v){
@@ -263,7 +266,7 @@ public class Automate_Comprime extends Activity {
                 break;
             case R.id.bt_autoCond_envoiRWDB:
 
-                if(et_AutoCompr_numDB.getText().toString().equals("") || et_AutoCompr_numDBnbreComprAffichbit.getText().toString().equals("") || et_AutoCompr_numDBCompr.getText().toString().equals("") || et_AutoCompr_numDB5Compr.getText().toString().equals("") || et_AutoCompr_numDB10Compr.getText().toString().equals("") || et_AutoCompr_numDB15Compr.getText().toString().equals("") || et_AutoCompr_numDBArriveeFlacon.getText().toString().equals("") || et_AutoCompr_numDBArriveeFlaconbit.getText().toString().equals("") || et_AutoCompr_numDBnbreComprAffich.getText().toString().equals("") || et_AutoCompr_numDBResetCompt.getText().toString().equals("")){
+                if(et_AutoCompr_numDB.getText().toString().equals("") || et_AutoCompr_numComprVraiByte.getText().toString().equals("") || et_AutoCompr_numDBnbreComprAffichbit.getText().toString().equals("") || et_AutoCompr_numDBCompr.getText().toString().equals("") || et_AutoCompr_numDB5Compr.getText().toString().equals("") || et_AutoCompr_numDB10Compr.getText().toString().equals("") || et_AutoCompr_numDB15Compr.getText().toString().equals("") || et_AutoCompr_numDBArriveeFlacon.getText().toString().equals("") || et_AutoCompr_numDBArriveeFlaconbit.getText().toString().equals("") || et_AutoCompr_numDBnbreComprAffich.getText().toString().equals("") || et_AutoCompr_numDBResetCompt.getText().toString().equals("")){
                     Toast.makeText(this,"Tous les champs doivent être remplis",Toast.LENGTH_LONG).show();
                 }
                 else if(Integer.parseInt(et_AutoCompr_numDB.getText().toString())<0 || Integer.parseInt(et_AutoCompr_numDB.getText().toString())>50){
@@ -285,10 +288,13 @@ public class Automate_Comprime extends Activity {
                     Toast.makeText(this,"Le champs de byte ou de bit d'arrivée des flacons ne sont pas bons",Toast.LENGTH_LONG).show();
                 }
                 else if(Integer.parseInt(et_AutoCompr_numDBnbreComprAffich.getText().toString())<0 || Integer.parseInt(et_AutoCompr_numDBnbreComprAffich.getText().toString())>36 || Integer.parseInt(et_AutoCompr_numDBnbreComprAffichbit.getText().toString())<0 || Integer.parseInt(et_AutoCompr_numDBnbreComprAffichbit.getText().toString())>8){
-                    Toast.makeText(this,"Le champs numéro de byte ou numéro de bit pour le nombres de comprimés n'est pas bon",Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,"Le champs numéro de byte ou numéro de bit pour le sélecteur de comprimés n'est pas bon",Toast.LENGTH_LONG).show();
                 }
                 else if(Integer.parseInt(et_AutoCompr_numDBResetCompt.getText().toString())<0 || Integer.parseInt(et_AutoCompr_numDBResetCompt.getText().toString())>36){
                     Toast.makeText(this,"Le champs du positionnement du mot n'est pas bon",Toast.LENGTH_LONG).show();
+                }
+                else if(Integer.parseInt(et_AutoCompr_numComprVraiByte.getText().toString())<0 || Integer.parseInt(et_AutoCompr_numComprVraiByte.getText().toString())>36){
+                    Toast.makeText(this,"Le champs du numéro de byte du nombre de comprimé n'est pas bon",Toast.LENGTH_LONG).show();
                 }
                 else{
                     String str=et_AutoCompr_numDB.getText().toString() + "#" +
@@ -300,6 +306,7 @@ public class Automate_Comprime extends Activity {
                             et_AutoCompr_numDBArriveeFlaconbit.getText().toString() + "#" +
                             et_AutoCompr_numDBnbreComprAffich.getText().toString() + "#" +
                             et_AutoCompr_numDBnbreComprAffichbit.getText().toString() + "#" +
+                            et_AutoCompr_numComprVraiByte.getText().toString() + "#" +
                             et_AutoCompr_numDBResetCompt.getText().toString();
                     try{
                         //FileOutputStream ous=openFileOutput("autom1.txt",MODE_APPEND);
@@ -317,6 +324,7 @@ public class Automate_Comprime extends Activity {
                     }
 
                     Toast.makeText(this,"Changements pris en compte",Toast.LENGTH_LONG).show();
+                    rl_ecritBits.setVisibility(View.GONE);
                 }
 
                 break;

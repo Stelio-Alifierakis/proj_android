@@ -124,7 +124,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/rl_ecritBits"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:padding="10sp">
 
                     <TextView
@@ -273,7 +273,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Byte nombre comprimés :"
+                        android:text="Byte sélecteur nob compr :"
                         android:layout_below="@+id/tv_AutoCompr_numDBArriveeFlacon"
                         android:textSize="12sp"
                         android:layout_marginBottom="15sp"
@@ -291,7 +291,7 @@
                         android:layout_marginRight="5sp"
                         android:background="@color/vert_gris"
                         android:id="@+id/et_AutoCompr_numDBnbreComprAffich"
-                        android:hint="Byte affich. nb compr"/>
+                        android:hint="Byte sél. nb compr"/>
 
                     <EditText
                         android:layout_width="wrap_content"
@@ -304,13 +304,36 @@
                         android:padding="5dp"
                         android:background="@color/vert_gris"
                         android:id="@+id/et_AutoCompr_numDBnbreComprAffichbit"
-                        android:hint="Bit nb compr"/>
+                        android:hint="Bit sél compr"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Byte nombre comprimés :"
+                        android:layout_below="@+id/tv_AutoCompr_numDBnbreComprAffich"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="20sp"
+                        android:id="@+id/tv_AutoCompr_numComprVrai"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number|numberDecimal"
+                        android:digits="0123456789"
+                        android:layout_toRightOf="@+id/tv_AutoCompr_numDBnbreComprAffich"
+                        android:layout_below="@+id/tv_AutoCompr_numDBnbreComprAffich"
+                        android:textSize="12sp"
+                        android:padding="5dp"
+                        android:layout_marginRight="5sp"
+                        android:background="@color/vert_gris"
+                        android:id="@+id/et_AutoCompr_numComprVraiByte"
+                        android:hint="Byte du nombres comprimés"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Reset du compteur :"
-                        android:layout_below="@+id/tv_AutoCompr_numDBnbreComprAffich"
+                        android:layout_below="@+id/tv_AutoCompr_numComprVrai"
                         android:textSize="12sp"
                         android:layout_marginBottom="20sp"
                         android:id="@+id/tv_AutoCompr_numDBResetCompt"/>
@@ -321,7 +344,7 @@
                         android:inputType="number|numberDecimal"
                         android:digits="0123456789"
                         android:layout_toRightOf="@+id/tv_AutoCompr_numDBnbreComprAffich"
-                        android:layout_below="@+id/tv_AutoCompr_numDBnbreComprAffich"
+                        android:layout_below="@+id/tv_AutoCompr_numComprVrai"
                         android:textSize="12sp"
                         android:padding="5dp"
                         android:layout_marginRight="5sp"
