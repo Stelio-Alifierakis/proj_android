@@ -23,8 +23,10 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import be.heh.campus_technique.proj_android_s_alifierakis.ecritureAutomate.WriteS7Conditionnement;
@@ -43,6 +45,7 @@ public class Automate_Comprime extends Activity {
     Button bt_autoCond_resetCompteur;
     Button bt_autoCond_retourChxAuto;
     Button bt_autoCond_envoiRWDB;
+    Button bt_autoCond_rw;
 
     RadioButton rb_AutoCompr_5compr;
     RadioButton rb_AutoCompr_10compr;
@@ -64,6 +67,7 @@ public class Automate_Comprime extends Activity {
     EditText et_AutoCompr_numDBArriveeFlaconbit;
     EditText et_AutoCompr_numDBnbreComprAffich;
     EditText et_AutoCompr_numDBResetCompt;
+    EditText et_AutoCompr_numDBnbreComprAffichbit;
 
     LinearLayout ll_AutoCompr_service;
 
@@ -84,7 +88,7 @@ public class Automate_Comprime extends Activity {
     private String login;
     private String droit;
 
-    private int[] tabBit;
+    private ArrayList<Integer> tabBit = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +110,7 @@ public class Automate_Comprime extends Activity {
         bt_autoCond_resetCompteur = (Button) findViewById(R.id.bt_autoCond_resetCompteur);
         bt_autoCond_retourChxAuto = (Button) findViewById(R.id.bt_autoCond_retourChxAuto);
         bt_autoCond_envoiRWDB = (Button) findViewById(R.id.bt_autoCond_envoiRWDB);
+        bt_autoCond_rw = (Button) findViewById(R.id.bt_autoCond_rw);
 
         et_AutoCompr_numDB=(EditText) findViewById(R.id.et_AutoCompr_numDB);
         et_AutoCompr_numDBCompr=(EditText) findViewById(R.id.et_AutoCompr_numDBCompr);
@@ -116,6 +121,7 @@ public class Automate_Comprime extends Activity {
         et_AutoCompr_numDBArriveeFlaconbit=(EditText) findViewById(R.id.et_AutoCompr_numDBArriveeFlaconbit);
         et_AutoCompr_numDBnbreComprAffich=(EditText) findViewById(R.id.et_AutoCompr_numDBnbreComprAffich);
         et_AutoCompr_numDBResetCompt=(EditText) findViewById(R.id.et_AutoCompr_numDBResetCompt);
+        et_AutoCompr_numDBnbreComprAffichbit=(EditText) findViewById(R.id.et_AutoCompr_numDBnbreComprAffichbit);
 
         rb_AutoCompr_5compr = (RadioButton) findViewById(R.id.rb_AutoCompr_5compr);
         rb_AutoCompr_10compr = (RadioButton) findViewById(R.id.rb_AutoCompr_10compr);
@@ -167,27 +173,7 @@ public class Automate_Comprime extends Activity {
         tv_AutoCompr_txtRack.setText(tv_AutoCompr_txtRack.getText() + " " + rack);
         tv_AutoCompr_txtSlot.setText(tv_AutoCompr_txtSlot.getText() + " " + slot);
 
-        if(droit=="RO"){
-             bt_autoCond_arriveeFlacon.setVisibility(View.GONE);
-             bt_autoCond_changeNbCompr.setVisibility(View.GONE);
-             bt_autoCond_selecteur.setVisibility(View.GONE);
-             bt_autoCond_resetCompteur.setVisibility(View.GONE);
-            bt_autoCond_envoiRWDB.setVisibility(View.GONE);
-        }
-        else if(droit=="FC"){
-            bt_autoCond_arriveeFlacon.setVisibility(View.VISIBLE);
-            bt_autoCond_changeNbCompr.setVisibility(View.VISIBLE);
-            bt_autoCond_selecteur.setVisibility(View.VISIBLE);
-            bt_autoCond_resetCompteur.setVisibility(View.VISIBLE);
-            bt_autoCond_envoiRWDB.setVisibility(View.VISIBLE);
-        }
-        else{
-            bt_autoCond_arriveeFlacon.setVisibility(View.VISIBLE);
-            bt_autoCond_changeNbCompr.setVisibility(View.VISIBLE);
-            bt_autoCond_selecteur.setVisibility(View.VISIBLE);
-            bt_autoCond_resetCompteur.setVisibility(View.VISIBLE);
-            bt_autoCond_envoiRWDB.setVisibility(View.GONE);
-        }
+        btVisibility();
 
         try{
             FileInputStream ins=openFileInput("RWautom1.txt");
@@ -203,11 +189,13 @@ public class Automate_Comprime extends Activity {
             ins.close();
 
             String[] confs=out.toString().split("#");
-
             int i=0;
             for(String a : confs){
-                tabBit[i]=Integer.parseInt(a);
-                Log.i("Valeur " + String.valueOf(i),String.valueOf(tabBit[i]));
+
+                //tabBit[i]=Integer.parseInt(a);
+
+                tabBit.add(Integer.parseInt(a));
+                Log.i("Valeur " + String.valueOf(i),String.valueOf(tabBit.get(i)));
                 i++;
             }
 
@@ -218,6 +206,17 @@ public class Automate_Comprime extends Activity {
         catch (IOException ex){
             ex.printStackTrace();
         }
+
+        et_AutoCompr_numDB.setText(String.valueOf(tabBit.get(0)));
+        et_AutoCompr_numDBCompr.setText(String.valueOf(tabBit.get(1)));
+        et_AutoCompr_numDB5Compr.setText(String.valueOf(tabBit.get(2)));
+        et_AutoCompr_numDB10Compr.setText(String.valueOf(tabBit.get(3)));
+        et_AutoCompr_numDB15Compr.setText(String.valueOf(tabBit.get(4)));
+        et_AutoCompr_numDBArriveeFlacon.setText(String.valueOf(tabBit.get(5)));
+        et_AutoCompr_numDBArriveeFlaconbit.setText(String.valueOf(tabBit.get(6)));
+        et_AutoCompr_numDBnbreComprAffich.setText(String.valueOf(tabBit.get(7)));
+        et_AutoCompr_numDBnbreComprAffichbit.setText(String.valueOf(tabBit.get(8)));
+        et_AutoCompr_numDBResetCompt.setText(String.valueOf(tabBit.get(9)));
     }
 
     public void onAutoCondClickManager(View v){
@@ -226,7 +225,7 @@ public class Automate_Comprime extends Activity {
 
                 if(bt_autoCond_ro.getText().equals("Se déconnecter")){
                     readS7.Stop();
-                    if(droit!="RO"){
+                    if(!droit.equals("RO")){
                         writeS7.Stop();
                     }
                     try{
@@ -244,9 +243,10 @@ public class Automate_Comprime extends Activity {
             case R.id.bt_autoCond_rw:
                 if(bt_autoCond_ro.getText().equals("Se déconnecter")){
                     readS7.Stop();
-                    if(droit!="RO"){
+                    if(!droit.equals("RO")){
                         writeS7.Stop();
                     }
+
                     try{
                         Thread.sleep(1000);
                     }
@@ -254,9 +254,71 @@ public class Automate_Comprime extends Activity {
                         Log.i("Automate_Comprime","test");
                         e.printStackTrace();
                     }
+
+                    bt_autoCond_ro.setText("Lire automate");
+                }
+                ll_AutoCompr_service.setVisibility(View.GONE);
+                rl_ecritBits.setVisibility(View.VISIBLE);
+
+                break;
+            case R.id.bt_autoCond_envoiRWDB:
+
+                if(et_AutoCompr_numDB.getText().toString().equals("") || et_AutoCompr_numDBnbreComprAffichbit.getText().toString().equals("") || et_AutoCompr_numDBCompr.getText().toString().equals("") || et_AutoCompr_numDB5Compr.getText().toString().equals("") || et_AutoCompr_numDB10Compr.getText().toString().equals("") || et_AutoCompr_numDB15Compr.getText().toString().equals("") || et_AutoCompr_numDBArriveeFlacon.getText().toString().equals("") || et_AutoCompr_numDBArriveeFlaconbit.getText().toString().equals("") || et_AutoCompr_numDBnbreComprAffich.getText().toString().equals("") || et_AutoCompr_numDBResetCompt.getText().toString().equals("")){
+                    Toast.makeText(this,"Tous les champs doivent être remplis",Toast.LENGTH_LONG).show();
+                }
+                else if(Integer.parseInt(et_AutoCompr_numDB.getText().toString())<0 || Integer.parseInt(et_AutoCompr_numDB.getText().toString())>50){
+                    Toast.makeText(this,"Le champs numéro DB n'est pas bon",Toast.LENGTH_LONG).show();
+                }
+                else if(Integer.parseInt(et_AutoCompr_numDBCompr.getText().toString())<0 || Integer.parseInt(et_AutoCompr_numDBCompr.getText().toString())>36){
+                    Toast.makeText(this,"Le champs numéro de byte des comprimés n'est pas bon",Toast.LENGTH_LONG).show();
+                }
+                else if(Integer.parseInt(et_AutoCompr_numDB5Compr.getText().toString())<0 || Integer.parseInt(et_AutoCompr_numDB5Compr.getText().toString())>8){
+                    Toast.makeText(this,"Le champs numéro de bit pour 5 comprimés n'est pas bon",Toast.LENGTH_LONG).show();
+                }
+                else if(Integer.parseInt(et_AutoCompr_numDB10Compr.getText().toString())<0 || Integer.parseInt(et_AutoCompr_numDB10Compr.getText().toString())>8){
+                    Toast.makeText(this,"Le champs numéro de bit pour 10 comprimés n'est pas bon",Toast.LENGTH_LONG).show();
+                }
+                else if(Integer.parseInt(et_AutoCompr_numDB15Compr.getText().toString())<0 || Integer.parseInt(et_AutoCompr_numDB15Compr.getText().toString())>8){
+                    Toast.makeText(this,"Le champs numéro de bit pour 15 comprimés n'est pas bon",Toast.LENGTH_LONG).show();
+                }
+                else if(Integer.parseInt(et_AutoCompr_numDBArriveeFlacon.getText().toString())<0 || Integer.parseInt(et_AutoCompr_numDBArriveeFlacon.getText().toString())>36 || Integer.parseInt(et_AutoCompr_numDBArriveeFlaconbit.getText().toString())<0 || Integer.parseInt(et_AutoCompr_numDBArriveeFlaconbit.getText().toString())>8){
+                    Toast.makeText(this,"Le champs de byte ou de bit d'arrivée des flacons ne sont pas bons",Toast.LENGTH_LONG).show();
+                }
+                else if(Integer.parseInt(et_AutoCompr_numDBnbreComprAffich.getText().toString())<0 || Integer.parseInt(et_AutoCompr_numDBnbreComprAffich.getText().toString())>36 || Integer.parseInt(et_AutoCompr_numDBnbreComprAffichbit.getText().toString())<0 || Integer.parseInt(et_AutoCompr_numDBnbreComprAffichbit.getText().toString())>8){
+                    Toast.makeText(this,"Le champs numéro de byte ou numéro de bit pour le nombres de comprimés n'est pas bon",Toast.LENGTH_LONG).show();
+                }
+                else if(Integer.parseInt(et_AutoCompr_numDBResetCompt.getText().toString())<0 || Integer.parseInt(et_AutoCompr_numDBResetCompt.getText().toString())>36){
+                    Toast.makeText(this,"Le champs du positionnement du mot n'est pas bon",Toast.LENGTH_LONG).show();
+                }
+                else{
+                    String str=et_AutoCompr_numDB.getText().toString() + "#" +
+                            et_AutoCompr_numDBCompr.getText().toString() + "#" +
+                            et_AutoCompr_numDB5Compr.getText().toString() + "#" +
+                            et_AutoCompr_numDB10Compr.getText().toString() + "#" +
+                            et_AutoCompr_numDB15Compr.getText().toString() + "#" +
+                            et_AutoCompr_numDBArriveeFlacon.getText().toString() + "#" +
+                            et_AutoCompr_numDBArriveeFlaconbit.getText().toString() + "#" +
+                            et_AutoCompr_numDBnbreComprAffich.getText().toString() + "#" +
+                            et_AutoCompr_numDBnbreComprAffichbit.getText().toString() + "#" +
+                            et_AutoCompr_numDBResetCompt.getText().toString();
+                    try{
+                        //FileOutputStream ous=openFileOutput("autom1.txt",MODE_APPEND);
+                        FileOutputStream ous=openFileOutput("RWautom1.txt",MODE_PRIVATE);
+                        byte[] buff;
+                        buff=str.toString().getBytes();
+                        ous.write(buff);
+                        ous.close();
+                    }
+                    catch (FileNotFoundException ex){
+                        ex.printStackTrace();
+                    }
+                    catch (IOException ex){
+                        ex.printStackTrace();
+                    }
+
+                    Toast.makeText(this,"Changements pris en compte",Toast.LENGTH_LONG).show();
                 }
 
-                rl_ecritBits.setVisibility(View.VISIBLE);
                 break;
             case R.id.bt_autoCond_ro:
 
@@ -279,17 +341,16 @@ public class Automate_Comprime extends Activity {
                             e.printStackTrace();
                         }
 
-                        if(droit!="RO"){
-                            writeS7=new WriteS7Conditionnement();
+                        if(!droit.equals("RO")){
+                            writeS7=new WriteS7Conditionnement(tabBit.get(0),tabBit.get(10));
                             //writeS7.Start("192.168.10.220","0","2");
                             //writeS7.Start("192.168.0.220","0","2");
                             writeS7.Start(ipAdr,rack,slot);
                         }
-
                     }
                     else{
                         readS7.Stop();
-                        if(droit!="RO"){
+                        if(!droit.equals("RO")){
                             writeS7.Stop();
                         }
 
@@ -318,48 +379,81 @@ public class Automate_Comprime extends Activity {
                     problemeCo();
                     ll_AutoCompr_service.setVisibility(View.GONE);
                 }
+
                 break;
             case R.id.rb_AutoCompr_5compr:
-                if(droit!="RO"){
-                    writeS7.setWriteBool(0,2, rb_AutoCompr_5compr.isChecked() ? 1 : 0);
-                    writeS7.setWriteBool(0,4, rb_AutoCompr_10compr.isChecked() ? 1 : 0);
-                    writeS7.setWriteBool(0,8, rb_AutoCompr_15compr.isChecked() ? 1 : 0);
-                }
-                break;
             case R.id.rb_AutoCompr_10compr:
-                if(droit!="RO"){
-                    writeS7.setWriteBool(0,2, rb_AutoCompr_5compr.isChecked() ? 1 : 0);
-                    writeS7.setWriteBool(0,4, rb_AutoCompr_10compr.isChecked() ? 1 : 0);
-                    writeS7.setWriteBool(0,8, rb_AutoCompr_15compr.isChecked() ? 1 : 0);
-                }
-                break;
             case R.id.rb_AutoCompr_15compr:
-                if(droit!="RO"){
-                    writeS7.setWriteBool(0,2, rb_AutoCompr_5compr.isChecked() ? 1 : 0);
-                    writeS7.setWriteBool(0,4, rb_AutoCompr_10compr.isChecked() ? 1 : 0);
-                    writeS7.setWriteBool(0,8, rb_AutoCompr_15compr.isChecked() ? 1 : 0);
-                }
+                checkCompr();
                 break;
             case R.id.bt_autoCond_selecteur:
-                if(droit!="RO"){
-                    writeS7.setWriteBool(0,1, bt_autoCond_selecteur.getText().toString()=="Activer sélecteur" ? 1 : 0);
+                if(!droit.equals("RO")){
+                    int bit=(int)Math.pow(2,tabBit.get(6));
+                    Log.i("------------>Bit", String.valueOf(bit));
+                    writeS7.setWriteBool(tabBit.get(5),bit, bt_autoCond_selecteur.getText().toString()=="Activer sélecteur" ? 1 : 0);
                 }
                 break;
             case R.id.bt_autoCond_arriveeFlacon:
-                if(droit!="RO"){
-                    writeS7.setWriteBool(1,8, bt_autoCond_arriveeFlacon.getText()=="Activer arrivée des flacons" ? 1 : 0);
+                if(!droit.equals("RO")){
+                    int bit=(int)Math.pow(2,tabBit.get(8));
+                    Log.i("------------>Bit", String.valueOf(bit));
+                    writeS7.setWriteBool(tabBit.get(7),bit, bt_autoCond_arriveeFlacon.getText()=="Activer arrivée des flacons" ? 1 : 0);
                 }
                 break;
             case R.id.bt_autoCond_changeNbCompr:
-                if(droit!="RO"){
-                    writeS7.setWriteByte(3,Integer.parseInt(tv_AutoCompr_txt_nbreComprAffich.getText().toString()));
+                if(!droit.equals("RO")){
+                    writeS7.setWriteByte(tabBit.get(9),Integer.parseInt(tv_AutoCompr_txt_nbreComprAffich.getText().toString()));
                 }
                 break;
             case R.id.bt_autoCond_resetCompteur:
-                if(droit!="RO"){
+                if(!droit.equals("RO")){
                     writeS7.setWriteInt(0);
                 }
                 break;
+        }
+    }
+
+    private void checkCompr(){
+        if(!droit.equals("RO")){
+            int bit1=(int)Math.pow(2,tabBit.get(2));
+            int bit2=(int)Math.pow(2,tabBit.get(3));
+            int bit3=(int)Math.pow(2,tabBit.get(4));
+
+            Log.i("------------>Bits", String.valueOf(bit1) + " et " + String.valueOf(bit2) + " et " + String.valueOf(bit3));
+
+            writeS7.setWriteBool(tabBit.get(1),bit1, rb_AutoCompr_5compr.isChecked() ? 1 : 0);
+            writeS7.setWriteBool(tabBit.get(1),bit2, rb_AutoCompr_10compr.isChecked() ? 1 : 0);
+            writeS7.setWriteBool(tabBit.get(1),bit3, rb_AutoCompr_15compr.isChecked() ? 1 : 0);
+        }
+    }
+
+    private void btVisibility(){
+        if(droit.equals("RO")){
+            bt_autoCond_arriveeFlacon.setVisibility(View.GONE);
+            bt_autoCond_changeNbCompr.setVisibility(View.GONE);
+            bt_autoCond_selecteur.setVisibility(View.GONE);
+            bt_autoCond_resetCompteur.setVisibility(View.GONE);
+            bt_autoCond_envoiRWDB.setVisibility(View.GONE);
+            bt_autoCond_rw.setVisibility(View.GONE);
+            Log.i("------------>Droit", "1 " + droit);
+        }
+        else if(droit.equals("FC")){
+            bt_autoCond_arriveeFlacon.setVisibility(View.VISIBLE);
+            bt_autoCond_changeNbCompr.setVisibility(View.VISIBLE);
+            bt_autoCond_selecteur.setVisibility(View.VISIBLE);
+            bt_autoCond_resetCompteur.setVisibility(View.VISIBLE);
+            bt_autoCond_envoiRWDB.setVisibility(View.VISIBLE);
+            bt_autoCond_rw.setVisibility(View.VISIBLE);
+            Log.i("------------>Droit", "2 " + droit);
+        }
+        else{
+            bt_autoCond_arriveeFlacon.setVisibility(View.VISIBLE);
+            bt_autoCond_changeNbCompr.setVisibility(View.VISIBLE);
+            bt_autoCond_selecteur.setVisibility(View.VISIBLE);
+            bt_autoCond_resetCompteur.setVisibility(View.VISIBLE);
+            bt_autoCond_envoiRWDB.setVisibility(View.VISIBLE);
+            bt_autoCond_rw.setVisibility(View.GONE);
+            Log.i("------------>Droit", "3 " + droit);
         }
     }
 

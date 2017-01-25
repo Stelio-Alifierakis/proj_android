@@ -47,6 +47,23 @@ public class MainActivity extends Activity {
             et_main_login.setText(extraTxt.getString("login"));
         }
 
+
+        /*String str="5#0#1#2#3#0#0#1#3#3#20";
+        try{
+            //FileOutputStream ous=openFileOutput("autom1.txt",MODE_APPEND);
+            FileOutputStream ous=openFileOutput("RWautom1.txt",MODE_PRIVATE);
+            byte[] buff;
+            buff=str.toString().getBytes();
+            ous.write(buff);
+            ous.close();
+        }
+        catch (FileNotFoundException ex){
+            ex.printStackTrace();
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
+        }*/
+
     }
 
     public void onMainClickManager(View v){
@@ -70,7 +87,7 @@ public class MainActivity extends Activity {
                         userBD.openForWrite();
                         userBD.insertUser(user1);
 
-                        String str="5#0#1#2#3#0#0#1#3#20";
+                        String str="5#0#1#2#3#0#0#1#3#3#20";
                         try{
                             //FileOutputStream ous=openFileOutput("autom1.txt",MODE_APPEND);
                             FileOutputStream ous=openFileOutput("RWautom1.txt",MODE_PRIVATE);

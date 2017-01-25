@@ -100,32 +100,6 @@ public class Connection extends Activity {
             ex.printStackTrace();
         }
 
-        try{
-            FileInputStream ins=openFileInput("autom2.txt");
-            BufferedReader reader=new BufferedReader(new InputStreamReader(ins));
-            StringBuilder out=new StringBuilder();
-            String line;
-
-            while ((line = reader.readLine()) != null){
-                out.append(line);
-            }
-
-            reader.close();
-            ins.close();
-
-            String[] confs=out.toString().split("#");
-            Toast.makeText(this,confs[0]+ " " + confs[1] + " " + confs[2],Toast.LENGTH_LONG).show();
-            et_connection_ipAUtomate2.setText(confs[0]);
-            et_connection_rackAUtomate2.setText(confs[1]);
-            et_connection_slotAUtomate2.setText(confs[2]);
-
-        }
-        catch (FileNotFoundException ex){
-            ex.printStackTrace();
-        }
-        catch (IOException ex){
-            ex.printStackTrace();
-        }
         //pref_data = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         pref_data = PreferenceManager.getDefaultSharedPreferences(getApplication());

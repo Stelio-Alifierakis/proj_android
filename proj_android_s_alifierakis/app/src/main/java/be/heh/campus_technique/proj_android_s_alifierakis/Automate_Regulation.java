@@ -224,7 +224,10 @@ public class Automate_Regulation extends Activity {
 
                         readS7.Stop();
                         vibb.stop();
-                        writeS7.Stop();
+
+                        if(!droit.equals("RO")){
+                            writeS7.Stop();
+                        }
                         try{
                             Thread.sleep(1000);
                         }
@@ -254,22 +257,37 @@ public class Automate_Regulation extends Activity {
                 break;
             case R.id.bt_autoReg_valEcriture:
                 //writeS7.setWriteInt(pb_AutoReg_nivLiq.getProgress(),0); nivLiq
-                writeS7.setWriteInt(nivLiq,0);
-                writeS7.setWriteInt(Integer.parseInt(tv_AutoReg_SP.getText().toString()),2);
-                writeS7.setWriteInt(Integer.parseInt(tv_AutoReg_manuel.getText().toString()),4);
-                writeS7.setWriteInt(Integer.parseInt(tv_AutoReg_mpv.getText().toString()),6);
+                if(!droit.equals("RO")){
+                    writeS7.setWriteInt(nivLiq,0);
+                    writeS7.setWriteInt(Integer.parseInt(tv_AutoReg_SP.getText().toString()),2);
+                    writeS7.setWriteInt(Integer.parseInt(tv_AutoReg_manuel.getText().toString()),4);
+                    writeS7.setWriteInt(Integer.parseInt(tv_AutoReg_mpv.getText().toString()),6);
+                }
+
                 break;
             case R.id.bt_autoReg_v1:
-                writeS7.setWriteBool(0,2, bt_autoReg_v1.getText().toString()=="Ouvrir la valve 1" ? 0 : 1);
+                if(!droit.equals("RO")){
+                    writeS7.setWriteBool(0,2, bt_autoReg_v1.getText().toString()=="Ouvrir la valve 1" ? 0 : 1);
+                }
+
                 break;
             case R.id.bt_autoReg_v2:
-                writeS7.setWriteBool(0,4, bt_autoReg_v2.getText().toString()=="Ouvrir la valve 2" ? 0 : 1);
+                if(!droit.equals("RO")){
+                    writeS7.setWriteBool(0,4, bt_autoReg_v2.getText().toString()=="Ouvrir la valve 2" ? 0 : 1);
+                }
+
                 break;
             case R.id.bt_autoReg_v3:
-                writeS7.setWriteBool(0,8, bt_autoReg_v3.getText().toString()=="Ouvrir la valve 3" ? 0 : 1);
+                if(!droit.equals("RO")){
+                    writeS7.setWriteBool(0,8, bt_autoReg_v3.getText().toString()=="Ouvrir la valve 3" ? 0 : 1);
+                }
+
                 break;
             case R.id.bt_autoReg_v4:
-                writeS7.setWriteBool(0,16, bt_autoReg_v4.getText().toString()=="Ouvrir la valve 4" ? 0 : 1);
+                if(!droit.equals("RO")){
+                    writeS7.setWriteBool(0,16, bt_autoReg_v4.getText().toString()=="Ouvrir la valve 4" ? 0 : 1);
+                }
+
                 break;
         }
     }
@@ -282,7 +300,11 @@ public class Automate_Regulation extends Activity {
         tv_AutoReg_txt_service.setText("Problème de connexion");
 
         readS7.Stop();
-        writeS7.Stop();
+
+        if(!droit.equals("RO")){
+            writeS7.Stop();
+        }
+
 
         try{
             Thread.sleep(1000);

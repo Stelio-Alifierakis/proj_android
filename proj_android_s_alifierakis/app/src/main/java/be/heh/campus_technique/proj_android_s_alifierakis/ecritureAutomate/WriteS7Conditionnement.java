@@ -29,10 +29,22 @@ public class WriteS7Conditionnement {
     private String[] parConnexion=new String[10];
     private byte[] motCommande=new byte[10];
     private byte[] motCommande2=new byte[2];
+    private int numDB;
+    private int debutEcritMots;
 
     public WriteS7Conditionnement(){
         comS7=new S7Client();
         plcS7=new AutomateS7();
+        numDB=5;
+        debutEcritMots=20;
+        writeThread=new Thread(plcS7);
+    }
+
+    public WriteS7Conditionnement(int numDB, int debutEcritMots){
+        comS7=new S7Client();
+        plcS7=new AutomateS7();
+        this.numDB=numDB;
+        this.debutEcritMots=debutEcritMots;
         writeThread=new Thread(plcS7);
     }
 
@@ -66,8 +78,8 @@ public class WriteS7Conditionnement {
                 Integer res=comS7.ConnectTo(parConnexion[0],Integer.valueOf(parConnexion[1]),Integer.valueOf(parConnexion[2]));
 
                 while(isRunning.get() && (res.equals(0))){
-                    Integer writePLC=comS7.WriteArea(S7.S7AreaDB,5,5,5,motCommande);
-                    writePLC = comS7.WriteArea(S7.S7AreaDB,5,20,2,motCommande2);
+                    Integer writePLC=comS7.WriteArea(S7.S7AreaDB,numDB,5,5,motCommande);
+                    writePLC = comS7.WriteArea(S7.S7AreaDB,numDB,debutEcritMots,2,motCommande2);
 
                     /*if(res.equals(0) && writePLC.equals(0)){
                         Log.i("res WRITE : ", String.valueOf(res) + " ********** " + String.valueOf(writePLC));
